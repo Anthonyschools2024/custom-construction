@@ -46,6 +46,12 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
+        /* Modal Background Blur */
+        .modal-backdrop {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
         /* Animation Classes */
         .reveal {
             opacity: 0;
@@ -121,9 +127,9 @@
 
                 <!-- Contact / Mobile Menu Button Right -->
                 <div class="flex items-center gap-4">
-                    <a href="#contact" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
+                    <button onclick="openModal()" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
                         Contact Us
-                    </a>
+                    </button>
                     <div class="-mr-2 flex md:hidden">
                         <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
                             <i class="fa-solid fa-bars text-xl"></i>
@@ -140,16 +146,59 @@
                 <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About ICF</a>
                 <a href="#gallery" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
                 <a href="#consultation" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Estimator</a>
-                <a href="#contact" class="text-brand-accent block px-3 py-2 rounded-md text-base font-medium">Contact Us</a>
+                <button onclick="openModal()" class="text-brand-accent block w-full text-left px-3 py-2 rounded-md text-base font-medium">Contact Us</button>
             </div>
         </div>
     </nav>
 
+    <!-- NEW: Lead Capture Modal (Hidden by default) -->
+    <div id="leadModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transform transition-all scale-95 opacity-0" id="modalContent">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-hard-hat text-brand-accent text-3xl mb-3"></i>
+                <h3 class="text-2xl font-bold text-white">Save Your Estimate</h3>
+                <p class="text-gray-400 text-sm mt-1">Enter your details to receive this official quote and book a consultation.</p>
+            </div>
+
+            <form id="leadForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
+                    <input type="text" id="leadName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="John Doe">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
+                    <input type="email" id="leadEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="john@example.com">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Phone Number</label>
+                    <input type="tel" id="leadPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="(918) 555-0123">
+                </div>
+
+                <!-- Hidden inputs to store calculator data -->
+                <input type="hidden" id="leadWallLength">
+                <input type="hidden" id="leadWallHeight">
+                <input type="hidden" id="leadCost">
+
+                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all duration-300 mt-2">
+                    Submit Request
+                </button>
+            </form>
+            
+            <p class="text-xs text-center text-gray-600 mt-4">Your information is secure. We never share your data.</p>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Overlay -->
         <div class="absolute inset-0 z-0">
-            <!-- Using a high quality Unsplash image for construction/concrete -->
             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" alt="Construction Site" class="w-full h-full object-cover opacity-30">
             <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
         </div>
@@ -184,7 +233,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <!-- Card 1 -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal">
                     <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
                         <i class="fa-solid fa-leaf"></i>
@@ -193,7 +241,6 @@
                     <p class="text-gray-400">ICF blocks provide superior insulation, reducing your heating and cooling costs by up to 60% compared to traditional wood framing.</p>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal delay-100">
                     <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -202,7 +249,6 @@
                     <p class="text-gray-400">Our concrete reinforced walls stand up to Tulsa's severe weather, offering protection against tornadoes and high winds.</p>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal delay-200">
                     <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
                         <i class="fa-solid fa-stopwatch"></i>
@@ -217,7 +263,6 @@
     <!-- Interactive Consultation/Calculator Section -->
     <section id="consultation" class="py-24 relative bg-slate-950">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
-            <!-- Background pattern -->
             <i class="fa-solid fa-cube text-[20rem] absolute -top-20 -right-20 text-white"></i>
         </div>
 
@@ -240,7 +285,6 @@
                     </ul>
                 </div>
 
-                <!-- Calculator Logic UI -->
                 <div class="bg-slate-900 border border-slate-700 p-8 rounded-3xl shadow-2xl reveal delay-100">
                     <div class="mb-8">
                         <label class="block text-sm font-medium text-gray-400 mb-2">Total Wall Length (Linear Feet)</label>
@@ -270,7 +314,8 @@
                         </div>
                         <p class="text-xs text-gray-500 mt-4">*Labor not included. Estimates vary based on corners and openings.</p>
                         
-                        <button class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2">
+                        <!-- UPDATED: Now triggers the modal -->
+                        <button onclick="openModal()" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2">
                             <span>Book Consultation</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -289,28 +334,24 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Project 1 -->
                 <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal">
                     <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 1">
                     <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <p class="text-brand-accent font-bold tracking-widest">RESIDENTIAL</p>
                     </div>
                 </div>
-                 <!-- Project 2 -->
                  <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-100">
                     <img src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 2">
                     <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <p class="text-brand-accent font-bold tracking-widest">COMMERCIAL</p>
                     </div>
                 </div>
-                 <!-- Project 3 -->
                  <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-200">
                     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 3">
                     <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <p class="text-brand-accent font-bold tracking-widest">FOUNDATION</p>
                     </div>
                 </div>
-                 <!-- Project 4 -->
                  <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-300">
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 4">
                     <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -339,20 +380,47 @@
                 </div>
             </div>
             <div class="mt-8 text-center text-gray-600 text-sm">
-                &copy; 2025 Custom Construction of Tulsa. All Rights Reserved.
+                &copy; 2024 Custom Construction of Tulsa. All Rights Reserved.
             </div>
         </div>
     </footer>
 
-    <!-- Logic Script -->
-    <script>
-        // 1. Mobile Menu Logic
-        function toggleMenu() {
+    <!-- Logic Script (Type = Module allows imports) -->
+    <script type="module">
+        // 1. FIREBASE CONFIGURATION & INITIALIZATION
+        // Merged directly into index.html to fix module resolution error
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBiWqdCFY3N3sMG0hPDXHBvvZTSaeKqVNE",
+          authDomain: "custom-construction-2025.firebaseapp.com",
+          databaseURL: "https://custom-construction-2025-default-rtdb.firebaseio.com",
+          projectId: "custom-construction-2025",
+          storageBucket: "custom-construction-2025.firebasestorage.app",
+          messagingSenderId: "1011209975106",
+          appId: "1:1011209975106:web:223538f2441047560184db",
+          measurementId: "G-HJ075RPVN9"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        console.log("Main App: Firestore Ready", db);
+
+        // --- UI & CALCULATOR LOGIC BELOW ---
+
+        // Mobile Menu Logic
+        window.toggleMenu = function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
 
-        // 2. Navbar Blur on Scroll
+        // Navbar Blur on Scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -362,7 +430,43 @@
             }
         });
 
-        // 3. Calculator Logic
+        // MODAL LOGIC (New for Sprint 1/2 Bridge)
+        window.openModal = function() {
+            const modal = document.getElementById('leadModal');
+            const content = document.getElementById('modalContent');
+            
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            
+            // Populate hidden fields with current calculator values
+            document.getElementById('leadWallLength').value = document.getElementById('lengthInput').value;
+            // You can grab other values here when we wire up the submit logic
+        }
+
+        window.closeModal = function() {
+            const modal = document.getElementById('leadModal');
+            const content = document.getElementById('modalContent');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Wait for animation to finish
+        }
+
+        // Close modal if clicking outside
+        document.getElementById('leadModal').addEventListener('click', (e) => {
+            if (e.target.id === 'leadModal') {
+                closeModal();
+            }
+        });
+
+        // Calculator Logic
         const lengthInput = document.getElementById('lengthInput');
         const lengthValue = document.getElementById('lengthValue');
         const heightBtns = document.querySelectorAll('.height-btn');
@@ -391,13 +495,11 @@
 
         heightBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // Remove active styling from all
                 heightBtns.forEach(b => {
                     b.classList.remove('bg-brand-accent', 'text-brand-dark');
                     b.classList.add('bg-slate-800', 'text-white');
                 });
                 
-                // Add active styling to clicked
                 e.target.classList.remove('bg-slate-800', 'text-white');
                 e.target.classList.add('bg-brand-accent', 'text-brand-dark');
                 
@@ -406,27 +508,20 @@
             });
         });
 
-        // Initial Calc
         updateCalculation();
 
-
-        // 4. Reveal on Scroll Animation
-        const observerOptions = {
-            threshold: 0.1
-        };
-
+        // Reveal on Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
         });
-
     </script>
 </body>
 </html>

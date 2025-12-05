@@ -88,10 +88,9 @@
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
         <!-- 3. SIDEBAR (Slide-out on mobile, Fixed on Desktop) -->
-        <!-- Added: fixed, inset-y-0, transform logic, z-50 -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar border-r border-slate-700 flex flex-col justify-between p-6 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
             <div>
-                <!-- Desktop Logo (Hidden on mobile since we have the header) -->
+                <!-- Desktop Logo -->
                 <div class="hidden lg:flex mb-10 items-center gap-2">
                     <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
                     <span class="font-logo font-bold text-white tracking-wider">CUSTOM<span class="text-brand-accent">APP</span></span>
@@ -120,7 +119,6 @@
         </aside>
 
         <!-- 4. MAIN CONTENT AREA -->
-        <!-- Added: lg:ml-64 to push content right on desktop -->
         <main class="flex-1 bg-brand-dark h-full overflow-y-auto lg:ml-64 p-4 lg:p-8 relative">
             
             <!-- Header -->
@@ -143,7 +141,6 @@
             <!-- TAB 1: LEADS CONTENT -->
             <div id="tab-leads">
                 <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden overflow-x-auto">
-                    <!-- Added min-w-[600px] to force horizontal scroll on tiny screens instead of breaking layout -->
                     <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-900 border-b border-slate-700 text-xs uppercase text-gray-400 tracking-wider">
@@ -178,11 +175,12 @@
     <!-- Logic Script (Type Module for Imports) -->
     <script type="module">
         // 1. FIREBASE CONFIG & IMPORTS
+        // ADDED: deleteDoc, doc imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-        import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-        // Same Config as your index.html
+        // Config
         const firebaseConfig = {
           apiKey: "AIzaSyBiWqdCFY3N3sMG0hPDXHBvvZTSaeKqVNE",
           authDomain: "custom-construction-2025.firebaseapp.com",
@@ -200,27 +198,20 @@
 
         // --- AUTHENTICATION LOGIC ---
 
-        // Listen for Auth State Changes (Login/Logout persistence)
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in
                 console.log("Admin Logged In:", user.email);
                 document.getElementById('loginView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
-                // Use block instead of flex for the container to handle mobile layout better
                 document.getElementById('dashboardView').classList.add('block');
-                
-                // Initial Data Load
                 loadLeads();
             } else {
-                // User is signed out
                 document.getElementById('dashboardView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('block');
                 document.getElementById('loginView').classList.remove('hidden');
             }
         });
 
-        // Login Function
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -234,7 +225,6 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // onAuthStateChanged handles the redirect
             } catch (error) {
                 console.error("Login Failed", error);
                 errorMsg.classList.remove('hidden');
@@ -245,7 +235,6 @@
             }
         });
 
-        // Logout Function
         window.logout = function() {
             signOut(auth).then(() => {
                 alert("Logged out successfully.");
@@ -255,27 +244,44 @@
         }
 
 
-        // --- DASHBOARD UI LOGIC (RESPONSIVE) ---
+        // --- DELETE LOGIC (NEW) ---
+        window.deleteEntry = async function(collectionName, docId) {
+            const confirmDelete = confirm("Are you sure you want to permanently delete this record? This cannot be undone.");
+            if (!confirmDelete) return;
+
+            try {
+                await deleteDoc(doc(db, collectionName, docId));
+                alert("Record deleted successfully.");
+                
+                // Refresh the appropriate view
+                if (collectionName === 'leads') {
+                    loadLeads();
+                } else {
+                    loadApplications();
+                }
+            } catch (error) {
+                console.error("Error deleting document: ", error);
+                alert("Error deleting record: " + error.message);
+            }
+        }
+
+
+        // --- DASHBOARD UI LOGIC ---
         
-        // Toggle Sidebar on Mobile
         window.toggleSidebar = function() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
             
             if (sidebar.classList.contains('-translate-x-full')) {
-                // Open Sidebar
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
             } else {
-                // Close Sidebar
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }
         }
 
-        // Tab Switching
         window.switchTab = function(tabName) {
-            // Update Sidebar UI
             const navLeads = document.getElementById('nav-leads');
             const navJobs = document.getElementById('nav-jobs');
             const title = document.getElementById('pageTitle');
@@ -308,7 +314,6 @@
                 loadApplications();
             }
 
-            // If on mobile, close sidebar after clicking a tab
             if (window.innerWidth < 1024) {
                 toggleSidebar();
             }
@@ -322,12 +327,11 @@
             const loader = document.getElementById('loader');
             const noMsg = document.getElementById('noLeadsMsg');
 
-            tableBody.innerHTML = ''; // Clear current
+            tableBody.innerHTML = '';
             loader.classList.remove('hidden');
             noMsg.classList.add('hidden');
 
             try {
-                // Fetch from Firestore "leads" collection
                 const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
                 const querySnapshot = await getDocs(q);
 
@@ -340,6 +344,7 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    const docId = doc.id; // Capture ID for deletion
                     const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
                     
                     const row = `
@@ -352,8 +357,11 @@
                                 <div class="text-sm text-white">${data.email}</div>
                                 <div class="text-xs text-gray-500">${data.phone}</div>
                             </td>
-                            <td class="p-4 text-right">
-                                <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white hover:text-black px-3 py-1 rounded transition-colors">Email</a>
+                            <td class="p-4 text-right flex items-center justify-end gap-2">
+                                <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white hover:text-black px-3 py-2 rounded transition-colors font-bold">Email</a>
+                                <button onclick="deleteEntry('leads', '${docId}')" class="text-xs bg-red-900/30 text-red-400 hover:bg-red-600 hover:text-white px-3 py-2 rounded transition-colors" title="Delete Entry">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     `;
@@ -389,31 +397,39 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    const docId = doc.id; // Capture ID for deletion
                     const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
 
                     const card = `
-                        <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl hover:border-gray-500 transition-colors">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 class="font-bold text-lg text-white">${data.firstName} ${data.lastName}</h3>
-                                    <span class="text-xs text-brand-accent uppercase tracking-wider">${data.position}</span>
+                        <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl hover:border-gray-500 transition-colors flex flex-col justify-between h-full">
+                            <div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-white">${data.firstName} ${data.lastName}</h3>
+                                        <span class="text-xs text-brand-accent uppercase tracking-wider">${data.position}</span>
+                                    </div>
+                                    <span class="text-xs text-gray-500">${date}</span>
                                 </div>
-                                <span class="text-xs text-gray-500">${date}</span>
+
+                                <div class="mb-4 space-y-1">
+                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-briefcase w-5 text-gray-500"></i> ${data.experience} Exp</div>
+                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-envelope w-5 text-gray-500"></i> ${data.email}</div>
+                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
+                                </div>
+
+                                <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4 max-h-32 overflow-y-auto">
+                                    "${data.message || 'No cover letter provided.'}"
+                                </div>
                             </div>
 
-                            <div class="mb-4 space-y-1">
-                                <div class="text-sm text-gray-300"><i class="fa-solid fa-briefcase w-5 text-gray-500"></i> ${data.experience} Exp</div>
-                                <div class="text-sm text-gray-300"><i class="fa-solid fa-envelope w-5 text-gray-500"></i> ${data.email}</div>
-                                <div class="text-sm text-gray-300"><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
+                            <div class="flex gap-2 mt-2">
+                                <a href="mailto:${data.email}?subject=Interview Request: ${data.position}" class="flex-1 text-center bg-slate-700 hover:bg-brand-accent hover:text-brand-dark text-white text-sm font-bold py-2 rounded transition-all">
+                                    Contact
+                                </a>
+                                <button onclick="deleteEntry('applications', '${docId}')" class="px-3 bg-red-900/30 text-red-400 hover:bg-red-600 hover:text-white rounded transition-colors" title="Delete Application">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </div>
-
-                            <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4 max-h-32 overflow-y-auto">
-                                "${data.message || 'No cover letter provided.'}"
-                            </div>
-
-                            <a href="mailto:${data.email}?subject=Interview Request: ${data.position}" class="block w-full text-center bg-slate-700 hover:bg-brand-accent hover:text-brand-dark text-white text-sm font-bold py-2 rounded transition-all">
-                                Contact Candidate
-                            </a>
                         </div>
                     `;
                     grid.innerHTML += card;

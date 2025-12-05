@@ -41,9 +41,10 @@
     <style>
         /* Custom Utilities */
         .glass-nav {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
         
         /* Modal Background Blur */
@@ -95,17 +96,23 @@
             background: #334155;
             border-radius: 2px;
         }
+
+        /* Nav Link Custom Hover Effect */
+        .nav-link {
+            position: relative;
+        }
     </style>
 </head>
 <body class="bg-brand-dark text-white font-sans antialiased overflow-x-hidden">
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Changed max-w-7xl to w-full max-w-[95%] to push elements further apart -->
+        <div class="w-full max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 
                 <!-- Logo Left -->
-                <div class="flex-shrink-0 flex items-center gap-3">
+                <div class="flex-shrink-0 flex items-center gap-3 z-50">
                     <i class="fa-solid fa-cube text-brand-accent text-3xl"></i>
                     <div class="flex flex-col">
                         <span class="font-logo text-xl md:text-2xl font-bold tracking-wider text-white">
@@ -116,22 +123,24 @@
                 </div>
 
                 <!-- Navigation Center (Desktop) -->
-                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2">
-                    <div class="flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
-                        <a href="#about" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">About ICF</a>
-                        <a href="#gallery" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Gallery</a>
-                        <a href="#consultation" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Estimator</a>
-                        <a href="#careers" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors text-brand-accent">Careers</a>
+                <!-- UPDATED STYLES: Border, Glow, Clean Look -->
+                <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
+                    <div class="flex items-center space-x-2 bg-slate-900/50 backdrop-blur-sm p-1.5 rounded-xl border border-white/5">
+                        <a href="#home" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Home</a>
+                        <a href="#about" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">About ICF</a>
+                        <a href="#gallery" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Gallery</a>
+                        <a href="#consultation" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Estimator</a>
+                        <a href="#careers" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-brand-accent border border-brand-accent/20 bg-brand-accent/5 hover:bg-brand-accent/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] hover:border-brand-accent transition-all duration-300">Careers</a>
                     </div>
                 </div>
 
                 <!-- Contact / Mobile Menu Button Right -->
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-4 z-50">
                     <button onclick="openModal('leadModal')" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
                         Contact Us
                     </button>
-                    <div class="-mr-2 flex md:hidden">
+                    <!-- Switch to lg:hidden because we switched the main nav to lg:block -->
+                    <div class="-mr-2 flex lg:hidden">
                         <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
                             <i class="fa-solid fa-bars text-xl"></i>
                         </button>
@@ -141,7 +150,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-gray-800">
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-dark border-t border-gray-800">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About ICF</a>

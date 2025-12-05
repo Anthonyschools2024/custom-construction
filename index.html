@@ -48,8 +48,8 @@
         
         /* Modal Background Blur */
         .modal-backdrop {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
         }
         
         /* Animation Classes */
@@ -122,12 +122,13 @@
                         <a href="#about" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">About ICF</a>
                         <a href="#gallery" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Gallery</a>
                         <a href="#consultation" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">Estimator</a>
+                        <a href="#careers" class="hover:text-brand-accent px-3 py-2 rounded-md text-sm font-medium transition-colors text-brand-accent">Careers</a>
                     </div>
                 </div>
 
                 <!-- Contact / Mobile Menu Button Right -->
                 <div class="flex items-center gap-4">
-                    <button onclick="openModal()" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
+                    <button onclick="openModal('leadModal')" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
                         Contact Us
                     </button>
                     <div class="-mr-2 flex md:hidden">
@@ -146,53 +147,113 @@
                 <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About ICF</a>
                 <a href="#gallery" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
                 <a href="#consultation" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Estimator</a>
-                <button onclick="openModal()" class="text-brand-accent block w-full text-left px-3 py-2 rounded-md text-base font-medium">Contact Us</button>
+                <a href="#careers" class="text-brand-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">Careers</a>
+                <button onclick="openModal('leadModal')" class="text-white bg-slate-800 w-full text-left px-3 py-2 rounded-md text-base font-medium">Contact Us</button>
             </div>
         </div>
     </nav>
 
-    <!-- NEW: Lead Capture Modal (Hidden by default) -->
+    <!-- 1. SALES LEAD MODAL -->
     <div id="leadModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transform transition-all scale-95 opacity-0" id="modalContent">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transform transition-all scale-95 opacity-0 modal-content">
             
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <button onclick="closeModal('leadModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
 
             <div class="text-center mb-6">
                 <i class="fa-solid fa-hard-hat text-brand-accent text-3xl mb-3"></i>
                 <h3 class="text-2xl font-bold text-white">Save Your Estimate</h3>
-                <p class="text-gray-400 text-sm mt-1">Enter your details to receive this official quote and book a consultation.</p>
+                <p class="text-gray-400 text-sm mt-1">Enter your details to receive this official quote.</p>
             </div>
 
             <form id="leadForm" class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
-                    <input type="text" id="leadName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="John Doe">
+                    <input type="text" id="leadName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
                 </div>
                 
                 <div>
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                    <input type="email" id="leadEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="john@example.com">
+                    <input type="email" id="leadEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Phone Number</label>
-                    <input type="tel" id="leadPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="(918) 555-0123">
+                    <input type="tel" id="leadPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
                 </div>
 
                 <!-- Hidden inputs to store calculator data -->
                 <input type="hidden" id="leadWallLength">
                 <input type="hidden" id="leadWallHeight">
                 <input type="hidden" id="leadCost">
+                <input type="hidden" id="leadBlocks">
 
                 <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all duration-300 mt-2">
                     Submit Request
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- 2. CAREER APPLICATION MODAL -->
+    <div id="careerModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
+        <div class="bg-slate-900 border border-brand-accent rounded-2xl shadow-2xl w-full max-w-lg p-8 relative transform transition-all scale-95 opacity-0 modal-content">
             
-            <p class="text-xs text-center text-gray-600 mt-4">Your information is secure. We never share your data.</p>
+            <button onclick="closeModal('careerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="mb-6 border-b border-gray-700 pb-4">
+                <span class="text-brand-accent text-xs font-bold tracking-widest uppercase">Join The Crew</span>
+                <h3 class="text-2xl font-bold text-white mt-1">Application: <span id="appJobTitle" class="text-brand-concrete">General</span></h3>
+            </div>
+
+            <form id="careerForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">First Name</label>
+                        <input type="text" id="appFirstName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Last Name</label>
+                        <input type="text" id="appLastName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email</label>
+                        <input type="email" id="appEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Phone</label>
+                        <input type="tel" id="appPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Years of Construction Experience</label>
+                    <select id="appExperience" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                        <option value="none">No Experience</option>
+                        <option value="1-3">1-3 Years</option>
+                        <option value="3-5">3-5 Years</option>
+                        <option value="5+">5+ Years (Expert)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Why should we hire you? (Or Link to Resume)</label>
+                    <textarea id="appMessage" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="I am hardworking, reliable, and have experience with..."></textarea>
+                </div>
+
+                <!-- Hidden Position Field -->
+                <input type="hidden" id="appPositionHidden">
+
+                <button type="submit" class="w-full bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all duration-300 mt-2">
+                    Submit Application
+                </button>
+            </form>
         </div>
     </div>
 
@@ -314,8 +375,8 @@
                         </div>
                         <p class="text-xs text-gray-500 mt-4">*Labor not included. Estimates vary based on corners and openings.</p>
                         
-                        <!-- UPDATED: Now triggers the modal -->
-                        <button onclick="openModal()" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2">
+                        <!-- Open Sales Lead Modal -->
+                        <button onclick="openModal('leadModal')" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2">
                             <span>Book Consultation</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -325,7 +386,7 @@
         </div>
     </section>
 
-    <!-- Gallery Placeholder -->
+    <!-- Gallery Section -->
     <section id="gallery" class="py-24 bg-brand-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -362,6 +423,30 @@
         </div>
     </section>
 
+    <!-- CAREERS SECTION -->
+    <section id="careers" class="py-24 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal">
+                <div>
+                    <h2 class="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2">Careers</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white">Join Our Crew</h3>
+                    <p class="text-gray-400 mt-4 max-w-xl">We are always looking for skilled tradesmen and laborers who take pride in their work. Help us build the future of Tulsa.</p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-slate-800 text-brand-accent border border-slate-700 text-sm">
+                        <span class="w-2 h-2 bg-brand-accent rounded-full mr-2 animate-pulse"></span>
+                        <span id="jobCount">Loading Positions...</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Dynamic Job Grid -->
+            <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will inject Job Cards here -->
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact" class="bg-black text-white py-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -382,18 +467,21 @@
             <div class="mt-8 text-center text-gray-600 text-sm">
                 &copy; 2024 Custom Construction of Tulsa. All Rights Reserved.
             </div>
+            <!-- Admin Link for ease of access (hidden from casual users mostly) -->
+            <div class="mt-4 text-center">
+                 <a href="admin.html" class="text-xs text-slate-800 hover:text-slate-600">Employee Login</a>
+            </div>
         </div>
     </footer>
 
-    <!-- Logic Script (Type = Module allows imports) -->
+    <!-- Logic Script (Type = Module) -->
     <script type="module">
-        // 1. FIREBASE CONFIGURATION & INITIALIZATION
-        // Merged directly into index.html to fix module resolution error
+        // 1. FIREBASE SETUP
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
-        // Your web app's Firebase configuration
+        // Your Config
         const firebaseConfig = {
           apiKey: "AIzaSyBiWqdCFY3N3sMG0hPDXHBvvZTSaeKqVNE",
           authDomain: "custom-construction-2025.firebaseapp.com",
@@ -405,123 +493,244 @@
           measurementId: "G-HJ075RPVN9"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        console.log("Main App: Firestore Ready", db);
-
-        // --- UI & CALCULATOR LOGIC BELOW ---
-
-        // Mobile Menu Logic
-        window.toggleMenu = function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Navbar Blur on Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('glass-nav');
-            } else {
-                nav.classList.remove('glass-nav');
-            }
-        });
-
-        // MODAL LOGIC (New for Sprint 1/2 Bridge)
-        window.openModal = function() {
-            const modal = document.getElementById('leadModal');
-            const content = document.getElementById('modalContent');
-            
-            modal.classList.remove('hidden');
-            // Small delay to allow display:block to apply before opacity transition
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
-            
-            // Populate hidden fields with current calculator values
-            document.getElementById('leadWallLength').value = document.getElementById('lengthInput').value;
-            // You can grab other values here when we wire up the submit logic
-        }
-
-        window.closeModal = function() {
-            const modal = document.getElementById('leadModal');
-            const content = document.getElementById('modalContent');
-            
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300); // Wait for animation to finish
-        }
-
-        // Close modal if clicking outside
-        document.getElementById('leadModal').addEventListener('click', (e) => {
-            if (e.target.id === 'leadModal') {
-                closeModal();
-            }
-        });
-
-        // Calculator Logic
+        // --- 2. CALCULATOR LOGIC ---
         const lengthInput = document.getElementById('lengthInput');
         const lengthValue = document.getElementById('lengthValue');
         const heightBtns = document.querySelectorAll('.height-btn');
         const blocksResult = document.getElementById('blocksResult');
         const costResult = document.getElementById('costResult');
-
+        
+        // State variables
         let currentHeight = 8;
-        const blockSqFt = 5.33; // Standard ICF block size
-        const pricePerBlock = 28.50; // Placeholder price
+        let estimatedCost = 0;
+        let blocksNeeded = 0;
+        
+        const blockSqFt = 5.33; 
+        const pricePerBlock = 28.50; 
 
         function updateCalculation() {
             const length = parseInt(lengthInput.value);
             lengthValue.innerText = length;
 
             const totalSqFt = length * currentHeight;
-            const blocksNeeded = Math.ceil(totalSqFt / blockSqFt);
-            const estimatedCost = blocksNeeded * pricePerBlock;
+            blocksNeeded = Math.ceil(totalSqFt / blockSqFt);
+            estimatedCost = blocksNeeded * pricePerBlock;
 
-            // Animate Numbers (Simple text update)
             blocksResult.innerText = blocksNeeded.toLocaleString();
             costResult.innerText = '$' + estimatedCost.toLocaleString();
         }
 
-        // Event Listeners for Calculator
         lengthInput.addEventListener('input', updateCalculation);
-
         heightBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 heightBtns.forEach(b => {
                     b.classList.remove('bg-brand-accent', 'text-brand-dark');
                     b.classList.add('bg-slate-800', 'text-white');
                 });
-                
                 e.target.classList.remove('bg-slate-800', 'text-white');
                 e.target.classList.add('bg-brand-accent', 'text-brand-dark');
-                
                 currentHeight = parseInt(e.target.dataset.height);
                 updateCalculation();
             });
         });
-
         updateCalculation();
 
-        // Reveal on Scroll Animation
+
+        // --- 3. JOB LISTINGS (CAREERS) ---
+        // Mock Data for now (Admin dashboard would eventually write this to DB)
+        const openPositions = [
+            {
+                title: 'ICF Installer',
+                type: 'Full-Time',
+                pay: '$25 - $32 / hr',
+                desc: 'Experienced installer needed for residential projects. Must be familiar with Fox Blocks or similar systems.',
+                reqs: ['2+ Years Construction', 'Valid Drivers License', 'Ability to lift 50lbs']
+            },
+            {
+                title: 'Concrete Finisher',
+                type: 'Contract / FT',
+                pay: '$22 - $28 / hr',
+                desc: 'Looking for a detail-oriented finisher for slab and foundation work. High standards required.',
+                reqs: ['Own Tools Preferred', 'Reliable Transport', 'Weekend Availability']
+            },
+            {
+                title: 'Site Foreman',
+                type: 'Full-Time',
+                pay: 'Salary (DOE)',
+                desc: 'Lead our crew on site. Responsible for timeline, material management, and crew safety.',
+                reqs: ['5+ Years Experience', 'Bilingual (Eng/Spa) is a plus', 'Leadership Skills']
+            }
+        ];
+
+        function renderJobs() {
+            const grid = document.getElementById('jobGrid');
+            const countLabel = document.getElementById('jobCount');
+            countLabel.innerText = `${openPositions.length} Open Positions`;
+            grid.innerHTML = '';
+
+            openPositions.forEach((job, index) => {
+                const delayClass = index === 0 ? '' : (index === 1 ? 'delay-100' : 'delay-200');
+                const cardHTML = `
+                    <div class="bg-slate-900 border border-slate-700 p-8 rounded-2xl hover:border-brand-accent transition-all duration-300 group reveal ${delayClass}">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="text-xl font-bold text-white">${job.title}</h4>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-accent px-2 py-1 rounded">${job.type}</span>
+                        </div>
+                        <p class="text-brand-accent font-mono text-sm mb-4">${job.pay}</p>
+                        <p class="text-gray-400 text-sm mb-6">${job.desc}</p>
+                        <ul class="text-gray-500 text-xs space-y-2 mb-8">
+                            ${job.reqs.map(r => `<li class="flex items-center"><i class="fa-solid fa-check text-brand-concrete mr-2"></i> ${r}</li>`).join('')}
+                        </ul>
+                        <button onclick="applyForJob('${job.title}')" class="w-full border border-gray-600 text-white font-bold py-3 rounded-xl group-hover:bg-brand-accent group-hover:text-brand-dark group-hover:border-transparent transition-all duration-300">
+                            Apply Now
+                        </button>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+        renderJobs();
+
+
+        // --- 4. MODAL LOGIC (Lead & Career) ---
+
+        window.openModal = function(modalID) {
+            const modal = document.getElementById(modalID);
+            const content = modal.querySelector('.modal-content');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Populate Hidden Fields based on Modal Type
+            if (modalID === 'leadModal') {
+                // Populate Sales Lead Data from Calculator State
+                document.getElementById('leadWallLength').value = lengthInput.value;
+                document.getElementById('leadWallHeight').value = currentHeight;
+                document.getElementById('leadCost').value = estimatedCost;
+                document.getElementById('leadBlocks').value = blocksNeeded;
+            }
+        }
+
+        window.applyForJob = function(jobTitle) {
+            document.getElementById('appJobTitle').innerText = jobTitle;
+            document.getElementById('appPositionHidden').value = jobTitle;
+            openModal('careerModal');
+        };
+
+        window.closeModal = function(modalID) {
+            const modal = document.getElementById(modalID);
+            const content = modal.querySelector('.modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-backdrop')) {
+                if (!document.getElementById('leadModal').classList.contains('hidden')) closeModal('leadModal');
+                if (!document.getElementById('careerModal').classList.contains('hidden')) closeModal('careerModal');
+            }
+        }
+
+
+        // --- 5. DATABASE SUBMISSION LOGIC ---
+
+        // A. Sales Lead Submission
+        const leadForm = document.getElementById('leadForm');
+        leadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = leadForm.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            try {
+                // This data structure matches what admin.html expects
+                await addDoc(collection(db, "leads"), {
+                    name: document.getElementById('leadName').value,
+                    email: document.getElementById('leadEmail').value,
+                    phone: document.getElementById('leadPhone').value,
+                    
+                    // Detailed Project Data
+                    wallLength: document.getElementById('leadWallLength').value,
+                    wallHeight: document.getElementById('leadWallHeight').value,
+                    estimatedCost: document.getElementById('leadCost').value,
+                    blocksNeeded: document.getElementById('leadBlocks').value,
+                    
+                    submittedAt: new Date()
+                });
+                alert("Estimate Request Sent! We will contact you shortly.");
+                closeModal('leadModal');
+                leadForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Error sending request: " + error.message);
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // B. Career Application Submission
+        const careerForm = document.getElementById('careerForm');
+        careerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = careerForm.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            try {
+                // This data structure matches what admin.html expects
+                await addDoc(collection(db, "applications"), {
+                    firstName: document.getElementById('appFirstName').value,
+                    lastName: document.getElementById('appLastName').value,
+                    email: document.getElementById('appEmail').value,
+                    phone: document.getElementById('appPhone').value,
+                    experience: document.getElementById('appExperience').value,
+                    message: document.getElementById('appMessage').value,
+                    position: document.getElementById('appPositionHidden').value,
+                    submittedAt: new Date(),
+                    status: 'New'
+                });
+                alert("Application Submitted Successfully!");
+                closeModal('careerModal');
+                careerForm.reset();
+            } catch (error) {
+                console.error("Error submitting application: ", error);
+                alert("Error submitting: " + error.message);
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+
+
+        // --- 6. UI HELPERS ---
+        window.toggleMenu = function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('glass-nav');
+            else nav.classList.remove('glass-nav');
+        });
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
     </script>
 </body>
 </html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Custom Construction</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a', /* Slate 900 */
+                            accent: '#f59e0b', /* Amber 500 */
+                            sidebar: '#1e293b', /* Slate 800 */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        logo: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans antialiased h-screen overflow-hidden">
+
+    <!-- ========================
+         LOGIN VIEW (Default)
+    ======================== -->
+    <div id="loginView" class="h-full w-full flex items-center justify-center relative">
+        <!-- Background Decor -->
+        <div class="absolute inset-0 z-0 opacity-20">
+            <i class="fa-solid fa-cube text-[30rem] absolute -bottom-20 -right-20 text-brand-sidebar"></i>
+        </div>
+
+        <div class="bg-brand-sidebar border border-slate-700 p-8 rounded-2xl shadow-2xl w-full max-w-md z-10 relative">
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-lock text-brand-accent text-4xl mb-4"></i>
+                <h1 class="font-logo text-2xl font-bold tracking-wider">ADMIN<span class="text-brand-accent">PORTAL</span></h1>
+                <p class="text-gray-500 text-sm mt-2">Authorized Personnel Only</p>
+            </div>
+
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Email Address</label>
+                    <input type="email" id="email" class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="admin@customconstruction.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Password</label>
+                    <input type="password" id="password" class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="••••••••" required>
+                </div>
+                <div id="loginError" class="text-red-500 text-sm text-center hidden">Invalid credentials. Please try again.</div>
+                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all duration-300">
+                    Secure Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================
+         DASHBOARD VIEW (Hidden)
+    ======================== -->
+    <div id="dashboardView" class="h-full w-full flex hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-brand-sidebar border-r border-slate-700 flex flex-col justify-between p-6">
+            <div>
+                <div class="mb-10 flex items-center gap-2">
+                    <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
+                    <span class="font-logo font-bold text-white tracking-wider">CUSTOM<span class="text-brand-accent">APP</span></span>
+                </div>
+                
+                <nav class="space-y-2">
+                    <button onclick="switchTab('leads')" id="nav-leads" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 bg-brand-accent text-brand-dark font-bold transition-all">
+                        <i class="fa-solid fa-money-bill-wave"></i> Sales Leads
+                    </button>
+                    <button onclick="switchTab('jobs')" id="nav-jobs" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-400 hover:text-white hover:bg-slate-700 transition-all">
+                        <i class="fa-solid fa-hard-hat"></i> Job Applications
+                    </button>
+                </nav>
+            </div>
+
+            <button onclick="logout()" class="text-gray-500 hover:text-red-400 text-sm flex items-center gap-2 transition-colors">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 bg-brand-dark overflow-y-auto p-8 relative">
+            
+            <!-- Header -->
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 id="pageTitle" class="text-3xl font-bold text-white">Sales Leads</h2>
+                    <p class="text-gray-500 text-sm mt-1">Manage your incoming data.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs text-gray-400 uppercase tracking-widest">Database Active</span>
+                </div>
+            </header>
+
+            <!-- Loading Spinner -->
+            <div id="loader" class="hidden flex justify-center mt-20">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-accent"></i>
+            </div>
+
+            <!-- TAB 1: LEADS CONTENT -->
+            <div id="tab-leads">
+                <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 border-b border-slate-700 text-xs uppercase text-gray-400 tracking-wider">
+                                <th class="p-4 font-medium">Date</th>
+                                <th class="p-4 font-medium">Customer Name</th>
+                                <th class="p-4 font-medium">Project Size</th>
+                                <th class="p-4 font-medium">Est. Cost</th>
+                                <th class="p-4 font-medium">Contact</th>
+                                <th class="p-4 font-medium text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody" class="text-sm divide-y divide-slate-700">
+                            <!-- JS Injected Rows -->
+                        </tbody>
+                    </table>
+                    <div id="noLeadsMsg" class="p-8 text-center text-gray-500 hidden">No sales leads found in database.</div>
+                </div>
+            </div>
+
+            <!-- TAB 2: APPLICATIONS CONTENT (Hidden) -->
+            <div id="tab-jobs" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="applicationsGrid">
+                    <!-- JS Injected Cards -->
+                </div>
+                <div id="noAppsMsg" class="p-8 text-center text-gray-500 hidden">No job applications found.</div>
+            </div>
+
+        </main>
+    </div>
+
+
+    <!-- Logic Script (Type Module for Imports) -->
+    <script type="module">
+        // 1. FIREBASE CONFIG & IMPORTS
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        // Same Config as your index.html
+        const firebaseConfig = {
+          apiKey: "AIzaSyBiWqdCFY3N3sMG0hPDXHBvvZTSaeKqVNE",
+          authDomain: "custom-construction-2025.firebaseapp.com",
+          databaseURL: "https://custom-construction-2025-default-rtdb.firebaseio.com",
+          projectId: "custom-construction-2025",
+          storageBucket: "custom-construction-2025.firebasestorage.app",
+          messagingSenderId: "1011209975106",
+          appId: "1:1011209975106:web:223538f2441047560184db",
+          measurementId: "G-HJ075RPVN9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- AUTHENTICATION LOGIC ---
+
+        // Listen for Auth State Changes (Login/Logout persistence)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                console.log("Admin Logged In:", user.email);
+                document.getElementById('loginView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+                document.getElementById('dashboardView').classList.add('flex');
+                
+                // Initial Data Load
+                loadLeads();
+            } else {
+                // User is signed out
+                document.getElementById('dashboardView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('flex');
+                document.getElementById('loginView').classList.remove('hidden');
+            }
+        });
+
+        // Login Function
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('loginError');
+            const btn = e.target.querySelector('button');
+
+            btn.innerText = "Verifying...";
+            btn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // onAuthStateChanged handles the redirect
+            } catch (error) {
+                console.error("Login Failed", error);
+                errorMsg.classList.remove('hidden');
+                errorMsg.innerText = "Login failed: " + error.message;
+            } finally {
+                btn.innerText = "Secure Login";
+                btn.disabled = false;
+            }
+        });
+
+        // Logout Function (Attached to window for HTML access)
+        window.logout = function() {
+            signOut(auth).then(() => {
+                alert("Logged out successfully.");
+            }).catch((error) => {
+                console.error("Error signing out", error);
+            });
+        }
+
+
+        // --- DASHBOARD LOGIC ---
+
+        // Tab Switching
+        window.switchTab = function(tabName) {
+            // Update Sidebar UI
+            const navLeads = document.getElementById('nav-leads');
+            const navJobs = document.getElementById('nav-jobs');
+            const title = document.getElementById('pageTitle');
+
+            if (tabName === 'leads') {
+                navLeads.classList.replace('text-gray-400', 'bg-brand-accent');
+                navLeads.classList.replace('hover:text-white', 'text-brand-dark');
+                navLeads.classList.add('font-bold');
+                
+                navJobs.classList.replace('bg-brand-accent', 'text-gray-400');
+                navJobs.classList.replace('text-brand-dark', 'hover:text-white');
+                navJobs.classList.remove('font-bold');
+                
+                document.getElementById('tab-leads').classList.remove('hidden');
+                document.getElementById('tab-jobs').classList.add('hidden');
+                title.innerText = "Sales Leads";
+                loadLeads();
+            } else {
+                navJobs.classList.replace('text-gray-400', 'bg-brand-accent');
+                navJobs.classList.replace('hover:text-white', 'text-brand-dark');
+                navJobs.classList.add('font-bold');
+                
+                navLeads.classList.replace('bg-brand-accent', 'text-gray-400');
+                navLeads.classList.replace('text-brand-dark', 'hover:text-white');
+                navLeads.classList.remove('font-bold');
+
+                document.getElementById('tab-jobs').classList.remove('hidden');
+                document.getElementById('tab-leads').classList.add('hidden');
+                title.innerText = "Job Applications";
+                loadApplications();
+            }
+        }
+
+        // --- DATA FETCHING ---
+
+        // 1. Fetch Sales Leads
+        async function loadLeads() {
+            const tableBody = document.getElementById('leadsTableBody');
+            const loader = document.getElementById('loader');
+            const noMsg = document.getElementById('noLeadsMsg');
+
+            tableBody.innerHTML = ''; // Clear current
+            loader.classList.remove('hidden');
+            noMsg.classList.add('hidden');
+
+            try {
+                // Fetch from Firestore "leads" collection
+                const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                loader.classList.add('hidden');
+
+                if (querySnapshot.empty) {
+                    noMsg.classList.remove('hidden');
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // Format Date safely
+                    const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                    
+                    // Calculation Logic Reuse (if not stored directly, calculate, but we stored it in Sprint 2)
+                    // Assuming we stored 'leadCost' and 'leadWallLength'
+                    // For now, let's display raw data or simple format
+                    
+                    const row = `
+                        <tr class="hover:bg-slate-800 transition-colors border-b border-slate-800">
+                            <td class="p-4 text-gray-400">${date}</td>
+                            <td class="p-4 font-bold text-white">${data.name || 'Unknown'}</td>
+                            <td class="p-4 text-gray-300">${data.wallLength || '0'} ft</td>
+                            <td class="p-4 text-brand-accent font-mono">$${(data.wallLength * 8 * 5.3).toLocaleString()} (Est)</td> <!-- Rough Calc for display if needed -->
+                            <td class="p-4">
+                                <div class="text-sm text-white">${data.email}</div>
+                                <div class="text-xs text-gray-500">${data.phone}</div>
+                            </td>
+                            <td class="p-4 text-right">
+                                <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white hover:text-black px-3 py-1 rounded transition-colors">Email</a>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+
+            } catch (error) {
+                console.error("Error loading leads:", error);
+                loader.classList.add('hidden');
+            }
+        }
+
+        // 2. Fetch Job Applications
+        async function loadApplications() {
+            const grid = document.getElementById('applicationsGrid');
+            const loader = document.getElementById('loader');
+            const noMsg = document.getElementById('noAppsMsg');
+
+            grid.innerHTML = '';
+            loader.classList.remove('hidden');
+            noMsg.classList.add('hidden');
+
+            try {
+                const q = query(collection(db, "applications"), orderBy("submittedAt", "desc"));
+                const querySnapshot = await getDocs(q);
+
+                loader.classList.add('hidden');
+
+                if (querySnapshot.empty) {
+                    noMsg.classList.remove('hidden');
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+
+                    const card = `
+                        <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl hover:border-gray-500 transition-colors">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg text-white">${data.firstName} ${data.lastName}</h3>
+                                    <span class="text-xs text-brand-accent uppercase tracking-wider">${data.position}</span>
+                                </div>
+                                <span class="text-xs text-gray-500">${date}</span>
+                            </div>
+
+                            <div class="mb-4 space-y-1">
+                                <div class="text-sm text-gray-300"><i class="fa-solid fa-briefcase w-5 text-gray-500"></i> ${data.experience} Exp</div>
+                                <div class="text-sm text-gray-300"><i class="fa-solid fa-envelope w-5 text-gray-500"></i> ${data.email}</div>
+                                <div class="text-sm text-gray-300"><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
+                            </div>
+
+                            <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4">
+                                "${data.message || 'No cover letter provided.'}"
+                            </div>
+
+                            <a href="mailto:${data.email}?subject=Interview Request: ${data.position}" class="block w-full text-center bg-slate-700 hover:bg-brand-accent hover:text-brand-dark text-white text-sm font-bold py-2 rounded transition-all">
+                                Contact Candidate
+                            </a>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+
+            } catch (error) {
+                console.error("Error loading apps:", error);
+                loader.classList.add('hidden');
+            }
+        }
+
+    </script>
+</body>
+</html>

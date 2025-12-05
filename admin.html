@@ -44,7 +44,7 @@
             <i class="fa-solid fa-cube text-[30rem] absolute -bottom-20 -right-20 text-brand-sidebar"></i>
         </div>
 
-        <div class="bg-brand-sidebar border border-slate-700 p-8 rounded-2xl shadow-2xl w-full max-w-md z-10 relative">
+        <div class="bg-brand-sidebar border border-slate-700 p-8 rounded-2xl shadow-2xl w-full max-w-md z-10 relative mx-4">
             <div class="text-center mb-8">
                 <i class="fa-solid fa-lock text-brand-accent text-4xl mb-4"></i>
                 <h1 class="font-logo text-2xl font-bold tracking-wider">ADMIN<span class="text-brand-accent">PORTAL</span></h1>
@@ -71,14 +71,37 @@
     <!-- ========================
          DASHBOARD VIEW (Hidden)
     ======================== -->
-    <div id="dashboardView" class="h-full w-full flex hidden">
+    <div id="dashboardView" class="h-full w-full hidden relative">
         
-        <!-- Sidebar -->
-        <aside class="w-64 bg-brand-sidebar border-r border-slate-700 flex flex-col justify-between p-6">
+        <!-- 1. MOBILE HEADER (Only visible on small screens) -->
+        <div class="lg:hidden bg-brand-sidebar border-b border-slate-700 p-4 flex justify-between items-center sticky top-0 z-40">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
+                <span class="font-logo font-bold text-white tracking-wider">CUSTOM<span class="text-brand-accent">APP</span></span>
+            </div>
+            <button onclick="toggleSidebar()" class="text-gray-300 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- 2. SIDEBAR OVERLAY (Mobile only backdrop) -->
+        <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+        <!-- 3. SIDEBAR (Slide-out on mobile, Fixed on Desktop) -->
+        <!-- Added: fixed, inset-y-0, transform logic, z-50 -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar border-r border-slate-700 flex flex-col justify-between p-6 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
             <div>
-                <div class="mb-10 flex items-center gap-2">
+                <!-- Desktop Logo (Hidden on mobile since we have the header) -->
+                <div class="hidden lg:flex mb-10 items-center gap-2">
                     <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
                     <span class="font-logo font-bold text-white tracking-wider">CUSTOM<span class="text-brand-accent">APP</span></span>
+                </div>
+                
+                <!-- Mobile Close Button -->
+                <div class="lg:hidden flex justify-end mb-6">
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
                 </div>
                 
                 <nav class="space-y-2">
@@ -96,13 +119,14 @@
             </button>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="flex-1 bg-brand-dark overflow-y-auto p-8 relative">
+        <!-- 4. MAIN CONTENT AREA -->
+        <!-- Added: lg:ml-64 to push content right on desktop -->
+        <main class="flex-1 bg-brand-dark h-full overflow-y-auto lg:ml-64 p-4 lg:p-8 relative">
             
             <!-- Header -->
-            <header class="flex justify-between items-center mb-8">
+            <header class="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
                 <div>
-                    <h2 id="pageTitle" class="text-3xl font-bold text-white">Sales Leads</h2>
+                    <h2 id="pageTitle" class="text-2xl md:text-3xl font-bold text-white">Sales Leads</h2>
                     <p class="text-gray-500 text-sm mt-1">Manage your incoming data.</p>
                 </div>
                 <div class="flex items-center gap-3">
@@ -118,8 +142,9 @@
 
             <!-- TAB 1: LEADS CONTENT -->
             <div id="tab-leads">
-                <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden">
-                    <table class="w-full text-left border-collapse">
+                <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden overflow-x-auto">
+                    <!-- Added min-w-[600px] to force horizontal scroll on tiny screens instead of breaking layout -->
+                    <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-900 border-b border-slate-700 text-xs uppercase text-gray-400 tracking-wider">
                                 <th class="p-4 font-medium">Date</th>
@@ -182,14 +207,15 @@
                 console.log("Admin Logged In:", user.email);
                 document.getElementById('loginView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
-                document.getElementById('dashboardView').classList.add('flex');
+                // Use block instead of flex for the container to handle mobile layout better
+                document.getElementById('dashboardView').classList.add('block');
                 
                 // Initial Data Load
                 loadLeads();
             } else {
                 // User is signed out
                 document.getElementById('dashboardView').classList.add('hidden');
-                document.getElementById('dashboardView').classList.remove('flex');
+                document.getElementById('dashboardView').classList.remove('block');
                 document.getElementById('loginView').classList.remove('hidden');
             }
         });
@@ -219,7 +245,7 @@
             }
         });
 
-        // Logout Function (Attached to window for HTML access)
+        // Logout Function
         window.logout = function() {
             signOut(auth).then(() => {
                 alert("Logged out successfully.");
@@ -229,7 +255,23 @@
         }
 
 
-        // --- DASHBOARD LOGIC ---
+        // --- DASHBOARD UI LOGIC (RESPONSIVE) ---
+        
+        // Toggle Sidebar on Mobile
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                // Open Sidebar
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                // Close Sidebar
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
 
         // Tab Switching
         window.switchTab = function(tabName) {
@@ -265,6 +307,11 @@
                 title.innerText = "Job Applications";
                 loadApplications();
             }
+
+            // If on mobile, close sidebar after clicking a tab
+            if (window.innerWidth < 1024) {
+                toggleSidebar();
+            }
         }
 
         // --- DATA FETCHING ---
@@ -293,20 +340,15 @@
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    // Format Date safely
                     const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
-                    
-                    // Calculation Logic Reuse (if not stored directly, calculate, but we stored it in Sprint 2)
-                    // Assuming we stored 'leadCost' and 'leadWallLength'
-                    // For now, let's display raw data or simple format
                     
                     const row = `
                         <tr class="hover:bg-slate-800 transition-colors border-b border-slate-800">
-                            <td class="p-4 text-gray-400">${date}</td>
-                            <td class="p-4 font-bold text-white">${data.name || 'Unknown'}</td>
-                            <td class="p-4 text-gray-300">${data.wallLength || '0'} ft</td>
-                            <td class="p-4 text-brand-accent font-mono">$${(data.wallLength * 8 * 5.3).toLocaleString()} (Est)</td> <!-- Rough Calc for display if needed -->
-                            <td class="p-4">
+                            <td class="p-4 text-gray-400 whitespace-nowrap">${date}</td>
+                            <td class="p-4 font-bold text-white whitespace-nowrap">${data.name || 'Unknown'}</td>
+                            <td class="p-4 text-gray-300 whitespace-nowrap">${data.wallLength || '0'} ft / ${data.wallHeight || '0'} ft</td>
+                            <td class="p-4 text-brand-accent font-mono whitespace-nowrap">$${data.estimatedCost || '0'}</td>
+                            <td class="p-4 min-w-[200px]">
                                 <div class="text-sm text-white">${data.email}</div>
                                 <div class="text-xs text-gray-500">${data.phone}</div>
                             </td>
@@ -365,7 +407,7 @@
                                 <div class="text-sm text-gray-300"><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
                             </div>
 
-                            <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4">
+                            <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4 max-h-32 overflow-y-auto">
                                 "${data.message || 'No cover letter provided.'}"
                             </div>
 

@@ -3,157 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Construction of Tulsa | ICF Specialists</title>
-    
+    <title>Custom Construction of Tulsa | ICF & Custom Homes</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Orbitron for Logo, Inter for Body -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom Config & Animations -->
+    <!-- Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            dark: '#0f172a', /* Slate 900 */
-                            accent: '#f59e0b', /* Amber 500 */
-                            light: '#f8fafc',
-                            concrete: '#64748b'
-                        }
+                        brand: { dark: '#0f172a', accent: '#f59e0b', concrete: '#64748b' }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        logo: ['Orbitron', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], logo: ['Orbitron', 'sans-serif'] }
                 }
             }
         }
     </script>
-
     <style>
-        /* Custom Utilities */
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Modal Background Blur */
-        .modal-backdrop {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(8px);
-        }
-        
-        /* Animation Classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Hero Text Gradient */
-        .text-gradient {
-            background: linear-gradient(to right, #f59e0b, #fbbf24);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Custom Range Slider */
-        input[type=range] {
-            -webkit-appearance: none; 
-            background: transparent; 
-        }
-        
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
+        .glass-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .modal-backdrop { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .text-gradient { background: linear-gradient(to right, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #f59e0b; cursor: pointer; margin-top: -10px; box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #334155; border-radius: 2px; }
+        /* File Input Styling */
+        input[type=file]::file-selector-button {
+            margin-right: 10px;
             background: #f59e0b;
+            border: none;
+            border-radius: 5px;
+            color: #0f172a;
+            padding: 8px 12px;
             cursor: pointer;
-            margin-top: -10px; 
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            font-weight: bold;
+            transition: background .2s;
         }
-        
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: #334155;
-            border-radius: 2px;
-        }
-
-        /* Nav Link Custom Hover Effect */
-        .nav-link {
-            position: relative;
-        }
+        input[type=file]::file-selector-button:hover { background: #fff; }
     </style>
 </head>
 <body class="bg-brand-dark text-white font-sans antialiased overflow-x-hidden">
 
-    <!-- Navigation -->
+    <!-- NAV -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
-        <!-- Changed max-w-7xl to w-full max-w-[95%] to push elements further apart -->
         <div class="w-full max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                
-                <!-- Logo Left -->
                 <div class="flex-shrink-0 flex items-center gap-3 z-50">
                     <i class="fa-solid fa-cube text-brand-accent text-3xl"></i>
                     <div class="flex flex-col">
-                        <span class="font-logo text-xl md:text-2xl font-bold tracking-wider text-white">
-                            CUSTOM<span class="text-brand-accent">CONSTRUCTION</span>
-                        </span>
+                        <span class="font-logo text-xl md:text-2xl font-bold tracking-wider text-white">CUSTOM<span class="text-brand-accent">CONSTRUCTION</span></span>
                         <span class="font-logo text-xs tracking-[0.3em] text-brand-concrete">OF TULSA</span>
                     </div>
                 </div>
-
-                <!-- Navigation Center (Desktop) -->
-                <!-- UPDATED STYLES: Border, Glow, Clean Look -->
                 <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
-                    <div class="flex items-center space-x-2 bg-slate-900/50 backdrop-blur-sm p-1.5 rounded-xl border border-white/5">
-                        <a href="#home" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Home</a>
-                        <a href="#about" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">About ICF</a>
-                        <a href="#gallery" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Gallery</a>
-                        <a href="#consultation" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:border-brand-accent/30 hover:bg-brand-accent/5 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300">Estimator</a>
-                        <a href="#careers" class="px-5 py-2.5 rounded-lg text-sm font-bold tracking-wide text-brand-accent border border-brand-accent/20 bg-brand-accent/5 hover:bg-brand-accent/10 hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] hover:border-brand-accent transition-all duration-300">Careers</a>
+                    <div class="flex items-center space-x-1 bg-slate-900/50 backdrop-blur-sm p-1.5 rounded-xl border border-white/5">
+                        <a href="#home" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Home</a>
+                        <a href="#about" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">About ICF</a>
+                        <a href="#custom-homes" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Custom Builds</a>
+                        <a href="#gallery" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Gallery</a>
+                        <a href="#consultation" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Estimator</a>
+                        <a href="#careers" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-brand-accent border border-brand-accent/20 bg-brand-accent/5 hover:bg-brand-accent/10 transition-all">Careers</a>
                     </div>
                 </div>
-
-                <!-- Contact / Mobile Menu Button Right -->
                 <div class="flex items-center gap-4 z-50">
-                    <button onclick="openModal('leadModal')" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-lg shadow-amber-500/20">
-                        Contact Us
-                    </button>
-                    <!-- Switch to lg:hidden because we switched the main nav to lg:block -->
+                    <button onclick="openModal('leadModal')" class="hidden md:inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-full text-brand-dark bg-brand-accent hover:bg-white hover:text-brand-dark transition-all shadow-lg shadow-amber-500/20">Contact Us</button>
                     <div class="-mr-2 flex lg:hidden">
-                        <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
-                            <i class="fa-solid fa-bars text-xl"></i>
-                        </button>
+                        <button onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700"><i class="fa-solid fa-bars text-xl"></i></button>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden bg-brand-dark border-t border-gray-800">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About ICF</a>
+                <a href="#custom-homes" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Custom Builds</a>
                 <a href="#gallery" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
                 <a href="#consultation" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Estimator</a>
                 <a href="#careers" class="text-brand-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">Careers</a>
@@ -162,271 +91,158 @@
         </div>
     </nav>
 
-    <!-- 1. SALES LEAD MODAL -->
+    <!-- 1. LEAD MODAL (Calculator) -->
     <div id="leadModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative transform transition-all scale-95 opacity-0 modal-content">
-            
-            <button onclick="closeModal('leadModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative modal-content opacity-0 transform scale-95 transition-all">
+            <button onclick="closeModal('leadModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             <div class="text-center mb-6">
                 <i class="fa-solid fa-hard-hat text-brand-accent text-3xl mb-3"></i>
                 <h3 class="text-2xl font-bold text-white">Save Your Estimate</h3>
                 <p class="text-gray-400 text-sm mt-1">Enter your details to receive this official quote.</p>
             </div>
-
             <form id="leadForm" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Full Name</label>
-                    <input type="text" id="leadName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                    <input type="email" id="leadEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Phone Number</label>
-                    <input type="tel" id="leadPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                </div>
-
-                <!-- Hidden inputs to store calculator data -->
-                <input type="hidden" id="leadWallLength">
-                <input type="hidden" id="leadWallHeight">
-                <input type="hidden" id="leadCost">
-                <input type="hidden" id="leadBlocks">
-
-                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all duration-300 mt-2">
-                    Submit Request
-                </button>
+                <input type="text" id="leadName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Full Name">
+                <input type="email" id="leadEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Email Address">
+                <input type="tel" id="leadPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Phone Number">
+                <input type="hidden" id="leadWallLength"><input type="hidden" id="leadWallHeight"><input type="hidden" id="leadCost"><input type="hidden" id="leadBlocks">
+                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all mt-2">Submit Request</button>
             </form>
         </div>
     </div>
 
     <!-- 2. CAREER APPLICATION MODAL -->
     <div id="careerModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
-        <div class="bg-slate-900 border border-brand-accent rounded-2xl shadow-2xl w-full max-w-lg p-8 relative transform transition-all scale-95 opacity-0 modal-content">
-            
-            <button onclick="closeModal('careerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
+        <div class="bg-slate-900 border border-brand-accent rounded-2xl shadow-2xl w-full max-w-lg p-8 relative modal-content opacity-0 transform scale-95 transition-all">
+            <button onclick="closeModal('careerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             <div class="mb-6 border-b border-gray-700 pb-4">
                 <span class="text-brand-accent text-xs font-bold tracking-widest uppercase">Join The Crew</span>
                 <h3 class="text-2xl font-bold text-white mt-1">Application: <span id="appJobTitle" class="text-brand-concrete">General</span></h3>
             </div>
-
             <form id="careerForm" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">First Name</label>
-                        <input type="text" id="appFirstName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Last Name</label>
-                        <input type="text" id="appLastName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                    </div>
+                    <input type="text" id="appFirstName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="First Name">
+                    <input type="text" id="appLastName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Last Name">
                 </div>
-                
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email</label>
-                        <input type="email" id="appEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Phone</label>
-                        <input type="tel" id="appPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
-                    </div>
+                    <input type="email" id="appEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Email">
+                    <input type="tel" id="appPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Phone">
                 </div>
-
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Years of Construction Experience</label>
-                    <select id="appExperience" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                    <select id="appExperience" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent">
                         <option value="none">No Experience</option>
                         <option value="1-3">1-3 Years</option>
                         <option value="3-5">3-5 Years</option>
                         <option value="5+">5+ Years (Expert)</option>
                     </select>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Why should we hire you? (Or Link to Resume)</label>
-                    <textarea id="appMessage" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="I am hardworking, reliable, and have experience with..."></textarea>
-                </div>
-
-                <!-- Hidden Position Field -->
+                <textarea id="appMessage" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Why should we hire you?"></textarea>
                 <input type="hidden" id="appPositionHidden">
+                <button type="submit" class="w-full bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all mt-2">Submit Application</button>
+            </form>
+        </div>
+    </div>
 
-                <button type="submit" class="w-full bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all duration-300 mt-2">
-                    Submit Application
+    <!-- 3. NEW: CUSTOM HOME INQUIRY MODAL (With File Upload) -->
+    <div id="customBuildModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
+        <div class="bg-slate-900 border border-white/20 rounded-2xl shadow-2xl w-full max-w-lg p-8 relative modal-content opacity-0 transform scale-95 transition-all">
+            <button onclick="closeModal('customBuildModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="mb-6 border-b border-gray-700 pb-4">
+                <span class="text-white text-xs font-bold tracking-widest uppercase">Traditional & Custom</span>
+                <h3 class="text-2xl font-bold text-brand-accent mt-1">Start Your Custom Build</h3>
+                <p class="text-gray-400 text-sm mt-1">Tell us about your vision. We build to your exact specs.</p>
+            </div>
+            <form id="customBuildForm" class="space-y-4">
+                <input type="text" id="customName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Full Name">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="email" id="customEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Email">
+                    <input type="tel" id="customPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Phone">
+                </div>
+                <input type="text" id="customBudget" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Estimated Budget (Optional)">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Upload Blueprints / Plans (PDF, Images) <br><span class="text-brand-accent text-[10px]">Max Size: 1MB</span></label>
+                    <input type="file" id="customFile" accept=".pdf,image/*" class="w-full bg-slate-950 border border-slate-700 rounded-lg text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-accent file:text-brand-dark hover:file:bg-white transition-all">
+                    <p class="text-xs text-gray-600 mt-1">If you have plans ready, upload them here.</p>
+                </div>
+                
+                <textarea id="customMessage" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Tell us about your project requirements..."></textarea>
+                
+                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all mt-2">
+                    Submit Project Inquiry
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- SECTIONS -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" alt="Construction Site" class="w-full h-full object-cover opacity-30">
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div>
-        </div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
-            <h1 class="text-4xl md:text-7xl font-bold tracking-tight mb-6 reveal">
-                BUILDING THE <br>
-                <span class="text-gradient font-logo">FUTURE</span> OF TULSA
-            </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 reveal delay-100">
-                Specializing in Insulated Concrete Forms (ICF). <br>
-                Stronger. More Efficient. Built to Last.
-            </p>
+        <div class="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-30"><div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 text-center pt-20">
+            <h1 class="text-4xl md:text-7xl font-bold tracking-tight mb-6 reveal">BUILDING THE <br><span class="text-gradient font-logo">FUTURE</span> OF TULSA</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 reveal delay-100">Specializing in Insulated Concrete Forms (ICF). <br>Stronger. More Efficient. Built to Last.</p>
             <div class="mt-10 flex justify-center gap-4 reveal delay-200">
-                <a href="#consultation" class="group relative px-8 py-4 bg-brand-accent text-brand-dark font-bold rounded-none skew-x-[-10deg] hover:bg-white transition-all duration-300">
-                    <span class="block skew-x-[10deg]">GET AN ESTIMATE</span>
-                    <div class="absolute inset-0 border border-white opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"></div>
-                </a>
-                <a href="#gallery" class="group px-8 py-4 border border-gray-500 text-white font-bold rounded-none skew-x-[-10deg] hover:border-brand-accent hover:text-brand-accent transition-all duration-300">
-                    <span class="block skew-x-[10deg]">VIEW GALLERY</span>
-                </a>
+                <a href="#consultation" class="group relative px-8 py-4 bg-brand-accent text-brand-dark font-bold rounded-none skew-x-[-10deg] hover:bg-white transition-all"><span class="block skew-x-[10deg]">GET AN ESTIMATE</span></a>
+                <a href="#custom-homes" class="group px-8 py-4 border border-gray-500 text-white font-bold rounded-none skew-x-[-10deg] hover:border-brand-accent hover:text-brand-accent transition-all"><span class="block skew-x-[10deg]">CUSTOM HOMES</span></a>
             </div>
         </div>
     </section>
 
-    <!-- About / ICF Info Section -->
     <section id="about" class="py-24 bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2">Why Choose Us?</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white">The Power of ICF Technology</h3>
-            </div>
-
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 reveal"><h2 class="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2">Why Choose Us?</h2><h3 class="text-3xl md:text-5xl font-bold text-white">The Power of ICF Technology</h3></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal">
-                    <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4 text-white">Energy Efficient</h4>
-                    <p class="text-gray-400">ICF blocks provide superior insulation, reducing your heating and cooling costs by up to 60% compared to traditional wood framing.</p>
-                </div>
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 reveal"><div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700"><i class="fa-solid fa-leaf"></i></div><h4 class="text-xl font-bold mb-4 text-white">Energy Efficient</h4><p class="text-gray-400">Superior insulation, reducing costs by up to 60%.</p></div>
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 reveal delay-100"><div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700"><i class="fa-solid fa-shield-halved"></i></div><h4 class="text-xl font-bold mb-4 text-white">Disaster Resistant</h4><p class="text-gray-400">Reinforced walls stand up to Tulsa's severe weather.</p></div>
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 reveal delay-200"><div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700"><i class="fa-solid fa-stopwatch"></i></div><h4 class="text-xl font-bold mb-4 text-white">Faster Construction</h4><p class="text-gray-400">Rapid assembly system gets you in your home sooner.</p></div>
+            </div>
+        </div>
+    </section>
 
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal delay-100">
-                    <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4 text-white">Disaster Resistant</h4>
-                    <p class="text-gray-400">Our concrete reinforced walls stand up to Tulsa's severe weather, offering protection against tornadoes and high winds.</p>
+    <!-- NEW SECTION: CUSTOM TRADITIONAL HOMES -->
+    <section id="custom-homes" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1600596542815-3ad19c6f6638?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-20">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/90 to-brand-dark/40"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16">
+            <div class="flex-1 reveal">
+                <h2 class="text-white/70 font-bold tracking-widest uppercase text-sm mb-2">Beyond Concrete</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">Custom Traditional <br><span class="text-brand-accent">Framing & Design</span></h3>
+                <p class="text-gray-300 text-lg mb-6 leading-relaxed">While we specialize in ICF, our roots are deeply planted in master craftsmanship. We understand that some architectural visions require the flexibility of traditional timber framing or hybrid approaches.</p>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-start"><i class="fa-solid fa-compass-drafting text-brand-accent mt-1 mr-4"></i><div><h4 class="font-bold text-white">Built to Your Specs</h4><p class="text-sm text-gray-400">Bring your own plans or work with our architects. We build exactly what you envision.</p></div></div>
+                    <div class="flex items-start"><i class="fa-solid fa-hammer text-brand-accent mt-1 mr-4"></i><div><h4 class="font-bold text-white">Hybrid Capabilities</h4><p class="text-sm text-gray-400">Combine the strength of an ICF foundation with the aesthetic of traditional wood framing.</p></div></div>
                 </div>
-
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-brand-accent hover:transform hover:-translate-y-2 transition-all duration-300 reveal delay-200">
-                    <div class="w-14 h-14 bg-slate-900 rounded-lg flex items-center justify-center mb-6 text-brand-accent text-2xl border border-slate-700">
-                        <i class="fa-solid fa-stopwatch"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4 text-white">Faster Construction</h4>
-                    <p class="text-gray-400">The interlocking block system allows for rapid assembly, getting you into your new custom home sooner.</p>
+                <button onclick="openModal('customBuildModal')" class="bg-white text-brand-dark px-8 py-3 rounded-full font-bold hover:bg-brand-accent hover:text-white transition-all shadow-xl">Submit Your Blueprints</button>
+            </div>
+            <div class="flex-1 w-full reveal delay-100">
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1574359653015-7429440f135b?q=80&w=1000&auto=format&fit=crop" class="rounded-2xl border border-white/10 shadow-2xl transform translate-y-8">
+                    <img src="https://images.unsplash.com/photo-1593604340846-4f7188963691?q=80&w=1000&auto=format&fit=crop" class="rounded-2xl border border-white/10 shadow-2xl">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Interactive Consultation/Calculator Section -->
-    <section id="consultation" class="py-24 relative bg-slate-950">
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
-            <i class="fa-solid fa-cube text-[20rem] absolute -top-20 -right-20 text-white"></i>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Estimate Your Project</h2>
-                    <p class="text-gray-400 mb-8 text-lg">Use our interactive tool to get a rough idea of material needs for your project. This is a preliminary estimation tool.</p>
-                    
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center text-gray-300">
-                            <i class="fa-solid fa-check text-brand-accent mr-3"></i> Premium ICF Blocks
-                        </li>
-                        <li class="flex items-center text-gray-300">
-                            <i class="fa-solid fa-check text-brand-accent mr-3"></i> Steel Reinforcement Included
-                        </li>
-                        <li class="flex items-center text-gray-300">
-                            <i class="fa-solid fa-check text-brand-accent mr-3"></i> Concrete Pouring Services
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-700 p-8 rounded-3xl shadow-2xl reveal delay-100">
-                    <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-400 mb-2">Total Wall Length (Linear Feet)</label>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-2xl font-bold text-white"><span id="lengthValue">100</span> ft</span>
-                        </div>
-                        <input type="range" min="10" max="500" value="100" class="w-full" id="lengthInput">
-                    </div>
-
-                    <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-400 mb-2">Wall Height (Feet)</label>
-                        <div class="flex gap-4 mt-2">
-                            <button class="height-btn px-4 py-2 bg-brand-accent text-brand-dark font-bold rounded hover:bg-white transition-colors" data-height="8">8 ft</button>
-                            <button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded hover:bg-slate-700 transition-colors" data-height="10">10 ft</button>
-                            <button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded hover:bg-slate-700 transition-colors" data-height="12">12 ft</button>
-                        </div>
-                    </div>
-
-                    <div class="border-t border-slate-700 pt-6">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-400">Estimated Blocks Needed:</span>
-                            <span class="text-xl font-bold text-white" id="blocksResult">0</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Approx. Material Cost:</span>
-                            <span class="text-3xl font-bold text-brand-accent" id="costResult">$0</span>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-4">*Labor not included. Estimates vary based on corners and openings.</p>
-                        
-                        <!-- Open Sales Lead Modal -->
-                        <button onclick="openModal('leadModal')" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2">
-                            <span>Book Consultation</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
     <section id="gallery" class="py-24 bg-brand-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-5xl font-bold text-white">Recent Projects</h2>
-                <p class="text-gray-400 mt-4">See the difference ICF makes.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 1">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <p class="text-brand-accent font-bold tracking-widest">RESIDENTIAL</p>
-                    </div>
-                </div>
-                 <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-100">
-                    <img src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 2">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <p class="text-brand-accent font-bold tracking-widest">COMMERCIAL</p>
-                    </div>
-                </div>
-                 <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-200">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 3">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <p class="text-brand-accent font-bold tracking-widest">FOUNDATION</p>
-                    </div>
-                </div>
-                 <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-300">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="House 4">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <p class="text-brand-accent font-bold tracking-widest">EXTERIOR</p>
-                    </div>
+        <div class="max-w-7xl mx-auto px-4 text-center mb-16 reveal"><h2 class="text-3xl md:text-5xl font-bold text-white">Recent Projects</h2></div>
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+             <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"><p class="text-brand-accent font-bold tracking-widest">RESIDENTIAL</p></div></div>
+             <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-100"><img src="https://images.unsplash.com/photo-1598928636135-d146006ff4be?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"><p class="text-brand-accent font-bold tracking-widest">COMMERCIAL</p></div></div>
+             <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-200"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"><p class="text-brand-accent font-bold tracking-widest">FOUNDATION</p></div></div>
+             <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal delay-300"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"><p class="text-brand-accent font-bold tracking-widest">EXTERIOR</p></div></div>
+        </div>
+    </section>
+
+    <section id="consultation" class="py-24 relative bg-slate-950">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10"><i class="fa-solid fa-cube text-[20rem] absolute -top-20 -right-20 text-white"></i></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal"><h2 class="text-4xl md:text-5xl font-bold mb-6">Estimate Your Project</h2><p class="text-gray-400 mb-8 text-lg">Preliminary estimation tool.</p><ul class="space-y-4 mb-8 text-gray-300"><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Premium ICF Blocks</li><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Steel Reinforcement</li><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Concrete Pouring</li></ul></div>
+                <div class="bg-slate-900 border border-slate-700 p-8 rounded-3xl shadow-2xl reveal delay-100">
+                    <div class="mb-8"><label class="block text-sm font-medium text-gray-400 mb-2">Total Wall Length (Linear Feet)</label><div class="flex items-center justify-between mb-2"><span class="text-2xl font-bold text-white"><span id="lengthValue">100</span> ft</span></div><input type="range" min="10" max="500" value="100" class="w-full" id="lengthInput"></div>
+                    <div class="mb-8"><label class="block text-sm font-medium text-gray-400 mb-2">Wall Height (Feet)</label><div class="flex gap-4 mt-2"><button class="height-btn px-4 py-2 bg-brand-accent text-brand-dark font-bold rounded" data-height="8">8 ft</button><button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded" data-height="10">10 ft</button><button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded" data-height="12">12 ft</button></div></div>
+                    <div class="border-t border-slate-700 pt-6"><div class="flex justify-between items-center mb-2"><span class="text-gray-400">Estimated Blocks:</span><span class="text-xl font-bold text-white" id="blocksResult">0</span></div><div class="flex justify-between items-center"><span class="text-gray-400">Approx. Material Cost:</span><span class="text-3xl font-bold text-brand-accent" id="costResult">$0</span></div><button onclick="openModal('leadModal')" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2"><span>Book Consultation</span><i class="fa-solid fa-arrow-right"></i></button></div>
                 </div>
             </div>
         </div>
@@ -439,58 +255,41 @@
                 <div>
                     <h2 class="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2">Careers</h2>
                     <h3 class="text-3xl md:text-5xl font-bold text-white">Join Our Crew</h3>
-                    <p class="text-gray-400 mt-4 max-w-xl">We are always looking for skilled tradesmen and laborers who take pride in their work. Help us build the future of Tulsa.</p>
+                    <p class="text-gray-400 mt-4 max-w-xl">We are always looking for skilled tradesmen. Help us build the future of Tulsa.</p>
                 </div>
                 <div class="mt-6 md:mt-0">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-slate-800 text-brand-accent border border-slate-700 text-sm">
                         <span class="w-2 h-2 bg-brand-accent rounded-full mr-2 animate-pulse"></span>
-                        <span id="jobCount">Loading Positions...</span>
+                        <span id="jobCount">Loading...</span>
                     </span>
                 </div>
             </div>
-
-            <!-- Dynamic Job Grid -->
-            <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Javascript will inject Job Cards here -->
+            <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div id="noJobsMsg" class="hidden text-center py-12">
+                <i class="fa-solid fa-briefcase text-4xl text-gray-700 mb-4"></i>
+                <p class="text-gray-500 text-lg">No Current Job Listings</p>
+                <p class="text-gray-600 text-sm">Check back later for new opportunities.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer id="contact" class="bg-black text-white py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <span class="font-logo text-xl font-bold tracking-wider">
-                        CUSTOM<span class="text-brand-accent">CONSTRUCTION</span>
-                    </span>
-                    <p class="text-gray-500 text-sm mt-2">Building the future of Tulsa, one block at a time.</p>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-brand-accent transition-colors"><i class="fa-brands fa-facebook text-2xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-brand-accent transition-colors"><i class="fa-brands fa-instagram text-2xl"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-brand-accent transition-colors"><i class="fa-brands fa-linkedin text-2xl"></i></a>
-                </div>
-            </div>
-            <div class="mt-8 text-center text-gray-600 text-sm">
-                &copy; 2025 Custom Construction of Tulsa. All Rights Reserved.
-            </div>
-            <!-- Admin Link for ease of access (hidden from casual users mostly) -->
-            <div class="mt-4 text-center">
-                 <a href="admin.html" class="text-xs text-slate-800 hover:text-slate-600">Employee Login</a>
-            </div>
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0"><span class="font-logo text-xl font-bold tracking-wider">CUSTOM<span class="text-brand-accent">CONSTRUCTION</span></span></div>
+            <div class="flex space-x-6"><a href="#" class="text-gray-400 hover:text-brand-accent"><i class="fa-brands fa-facebook text-2xl"></i></a><a href="#" class="text-gray-400 hover:text-brand-accent"><i class="fa-brands fa-instagram text-2xl"></i></a><a href="#" class="text-gray-400 hover:text-brand-accent"><i class="fa-brands fa-linkedin text-2xl"></i></a></div>
         </div>
+        <div class="mt-8 text-center text-gray-600 text-sm">&copy; 2025 Custom Construction of Tulsa. All Rights Reserved.</div>
+        <div class="mt-4 text-center"><a href="admin.html" class="text-xs text-slate-800 hover:text-slate-600">Employee Login</a></div>
     </footer>
 
-    <!-- Logic Script (Type = Module) -->
+    <!-- LOGIC SCRIPT -->
     <script type="module">
-        // 1. FIREBASE SETUP
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        // REMOVED: Storage Imports to bypass CORS
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
-        // Your Config
         const firebaseConfig = {
           apiKey: "AIzaSyBiWqdCFY3N3sMG0hPDXHBvvZTSaeKqVNE",
           authDomain: "custom-construction-2025.firebaseapp.com",
@@ -503,243 +302,197 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // --- 2. CALCULATOR LOGIC ---
+        // --- HELPER: BASE64 ENCODER ---
+        const getBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        };
+
+        // --- FETCH JOBS ---
+        async function renderJobs() {
+            const grid = document.getElementById('jobGrid');
+            const countLabel = document.getElementById('jobCount');
+            const noMsg = document.getElementById('noJobsMsg');
+            grid.innerHTML = ''; 
+            try {
+                const q = query(collection(db, "job_listings"), orderBy("postedAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                countLabel.innerText = `${querySnapshot.size} Open Positions`;
+                if (querySnapshot.empty) { noMsg.classList.remove('hidden'); return; } else { noMsg.classList.add('hidden'); }
+                querySnapshot.forEach((doc, index) => {
+                    const job = doc.data();
+                    const delayClass = index === 0 ? '' : (index === 1 ? 'delay-100' : 'delay-200');
+                    const cardHTML = `
+                        <div class="bg-slate-900 border border-slate-700 p-8 rounded-2xl hover:border-brand-accent transition-all duration-300 group reveal ${delayClass}">
+                            <div class="flex justify-between items-start mb-4">
+                                <h4 class="text-xl font-bold text-white">${job.title}</h4>
+                                <span class="text-xs font-bold text-brand-dark bg-brand-accent px-2 py-1 rounded">${job.type}</span>
+                            </div>
+                            <p class="text-brand-accent font-mono text-sm mb-4">${job.pay}</p>
+                            <p class="text-gray-400 text-sm mb-6">${job.desc}</p>
+                            <ul class="text-gray-500 text-xs space-y-2 mb-8">
+                                ${job.reqs ? job.reqs.map(r => `<li class="flex items-center"><i class="fa-solid fa-check text-brand-concrete mr-2"></i> ${r}</li>`).join('') : ''}
+                            </ul>
+                            <button onclick="applyForJob('${job.title}')" class="w-full border border-gray-600 text-white font-bold py-3 rounded-xl group-hover:bg-brand-accent group-hover:text-brand-dark group-hover:border-transparent transition-all duration-300">Apply Now</button>
+                        </div>`;
+                    grid.innerHTML += cardHTML;
+                });
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            } catch (error) { console.error("Error fetching jobs:", error); countLabel.innerText = "Error"; }
+        }
+        renderJobs();
+
+        // --- CALCULATOR ---
         const lengthInput = document.getElementById('lengthInput');
         const lengthValue = document.getElementById('lengthValue');
         const heightBtns = document.querySelectorAll('.height-btn');
         const blocksResult = document.getElementById('blocksResult');
         const costResult = document.getElementById('costResult');
-        
-        // State variables
         let currentHeight = 8;
         let estimatedCost = 0;
         let blocksNeeded = 0;
-        
         const blockSqFt = 5.33; 
         const pricePerBlock = 28.50; 
-
         function updateCalculation() {
             const length = parseInt(lengthInput.value);
             lengthValue.innerText = length;
-
             const totalSqFt = length * currentHeight;
             blocksNeeded = Math.ceil(totalSqFt / blockSqFt);
             estimatedCost = blocksNeeded * pricePerBlock;
-
             blocksResult.innerText = blocksNeeded.toLocaleString();
             costResult.innerText = '$' + estimatedCost.toLocaleString();
         }
-
         lengthInput.addEventListener('input', updateCalculation);
         heightBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                heightBtns.forEach(b => {
-                    b.classList.remove('bg-brand-accent', 'text-brand-dark');
-                    b.classList.add('bg-slate-800', 'text-white');
-                });
-                e.target.classList.remove('bg-slate-800', 'text-white');
-                e.target.classList.add('bg-brand-accent', 'text-brand-dark');
-                currentHeight = parseInt(e.target.dataset.height);
-                updateCalculation();
+                heightBtns.forEach(b => { b.classList.remove('bg-brand-accent', 'text-brand-dark'); b.classList.add('bg-slate-800', 'text-white'); });
+                e.target.classList.remove('bg-slate-800', 'text-white'); e.target.classList.add('bg-brand-accent', 'text-brand-dark');
+                currentHeight = parseInt(e.target.dataset.height); updateCalculation();
             });
         });
         updateCalculation();
 
-
-        // --- 3. JOB LISTINGS (CAREERS) ---
-        // Mock Data for now (Admin dashboard would eventually write this to DB)
-        const openPositions = [
-            {
-                title: 'ICF Installer',
-                type: 'Full-Time',
-                pay: '$25 - $32 / hr',
-                desc: 'Experienced installer needed for residential projects. Must be familiar with Fox Blocks or similar systems.',
-                reqs: ['2+ Years Construction', 'Valid Drivers License', 'Ability to lift 50lbs']
-            },
-            {
-                title: 'Concrete Finisher',
-                type: 'Contract / FT',
-                pay: '$22 - $28 / hr',
-                desc: 'Looking for a detail-oriented finisher for slab and foundation work. High standards required.',
-                reqs: ['Own Tools Preferred', 'Reliable Transport', 'Weekend Availability']
-            },
-            {
-                title: 'Site Foreman',
-                type: 'Full-Time',
-                pay: 'Salary (DOE)',
-                desc: 'Lead our crew on site. Responsible for timeline, material management, and crew safety.',
-                reqs: ['5+ Years Experience', 'Bilingual (Eng/Spa) is a plus', 'Leadership Skills']
-            }
-        ];
-
-        function renderJobs() {
-            const grid = document.getElementById('jobGrid');
-            const countLabel = document.getElementById('jobCount');
-            countLabel.innerText = `${openPositions.length} Open Positions`;
-            grid.innerHTML = '';
-
-            openPositions.forEach((job, index) => {
-                const delayClass = index === 0 ? '' : (index === 1 ? 'delay-100' : 'delay-200');
-                const cardHTML = `
-                    <div class="bg-slate-900 border border-slate-700 p-8 rounded-2xl hover:border-brand-accent transition-all duration-300 group reveal ${delayClass}">
-                        <div class="flex justify-between items-start mb-4">
-                            <h4 class="text-xl font-bold text-white">${job.title}</h4>
-                            <span class="text-xs font-bold text-brand-dark bg-brand-accent px-2 py-1 rounded">${job.type}</span>
-                        </div>
-                        <p class="text-brand-accent font-mono text-sm mb-4">${job.pay}</p>
-                        <p class="text-gray-400 text-sm mb-6">${job.desc}</p>
-                        <ul class="text-gray-500 text-xs space-y-2 mb-8">
-                            ${job.reqs.map(r => `<li class="flex items-center"><i class="fa-solid fa-check text-brand-concrete mr-2"></i> ${r}</li>`).join('')}
-                        </ul>
-                        <button onclick="applyForJob('${job.title}')" class="w-full border border-gray-600 text-white font-bold py-3 rounded-xl group-hover:bg-brand-accent group-hover:text-brand-dark group-hover:border-transparent transition-all duration-300">
-                            Apply Now
-                        </button>
-                    </div>
-                `;
-                grid.innerHTML += cardHTML;
-            });
-        }
-        renderJobs();
-
-
-        // --- 4. MODAL LOGIC (Lead & Career) ---
-
+        // --- MODAL LOGIC ---
         window.openModal = function(modalID) {
             const modal = document.getElementById(modalID);
             const content = modal.querySelector('.modal-content');
-            
             modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
-
-            // Populate Hidden Fields based on Modal Type
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
             if (modalID === 'leadModal') {
-                // Populate Sales Lead Data from Calculator State
                 document.getElementById('leadWallLength').value = lengthInput.value;
                 document.getElementById('leadWallHeight').value = currentHeight;
                 document.getElementById('leadCost').value = estimatedCost;
                 document.getElementById('leadBlocks').value = blocksNeeded;
             }
         }
-
         window.applyForJob = function(jobTitle) {
             document.getElementById('appJobTitle').innerText = jobTitle;
             document.getElementById('appPositionHidden').value = jobTitle;
             openModal('careerModal');
         };
-
         window.closeModal = function(modalID) {
             const modal = document.getElementById(modalID);
             const content = modal.querySelector('.modal-content');
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
-
         window.onclick = function(event) {
             if (event.target.classList.contains('modal-backdrop')) {
                 if (!document.getElementById('leadModal').classList.contains('hidden')) closeModal('leadModal');
                 if (!document.getElementById('careerModal').classList.contains('hidden')) closeModal('careerModal');
+                if (!document.getElementById('customBuildModal').classList.contains('hidden')) closeModal('customBuildModal');
             }
         }
 
-
-        // --- 5. DATABASE SUBMISSION LOGIC ---
-
-        // A. Sales Lead Submission
+        // --- FORM SUBMISSIONS ---
+        
+        // 1. LEAD FORM
         const leadForm = document.getElementById('leadForm');
         leadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = leadForm.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-
+            const btn = leadForm.querySelector('button'); const originalText = btn.innerText;
+            btn.innerText = "Sending..."; btn.disabled = true;
             try {
-                // This data structure matches what admin.html expects
                 await addDoc(collection(db, "leads"), {
-                    name: document.getElementById('leadName').value,
-                    email: document.getElementById('leadEmail').value,
-                    phone: document.getElementById('leadPhone').value,
-                    
-                    // Detailed Project Data
-                    wallLength: document.getElementById('leadWallLength').value,
-                    wallHeight: document.getElementById('leadWallHeight').value,
-                    estimatedCost: document.getElementById('leadCost').value,
-                    blocksNeeded: document.getElementById('leadBlocks').value,
-                    
-                    submittedAt: new Date()
+                    name: document.getElementById('leadName').value, email: document.getElementById('leadEmail').value, phone: document.getElementById('leadPhone').value,
+                    wallLength: document.getElementById('leadWallLength').value, wallHeight: document.getElementById('leadWallHeight').value, estimatedCost: document.getElementById('leadCost').value, blocksNeeded: document.getElementById('leadBlocks').value, submittedAt: new Date()
                 });
-                alert("Estimate Request Sent! We will contact you shortly.");
-                closeModal('leadModal');
-                leadForm.reset();
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                alert("Error sending request: " + error.message);
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+                alert("Estimate Request Sent!"); closeModal('leadModal'); leadForm.reset();
+            } catch (error) { console.error("Error:", error); alert("Error sending request."); } finally { btn.innerText = originalText; btn.disabled = false; }
         });
 
-        // B. Career Application Submission
+        // 2. CAREER FORM
         const careerForm = document.getElementById('careerForm');
         careerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = careerForm.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = "Submitting...";
-            btn.disabled = true;
-
+            const btn = careerForm.querySelector('button'); const originalText = btn.innerText;
+            btn.innerText = "Submitting..."; btn.disabled = true;
             try {
-                // This data structure matches what admin.html expects
                 await addDoc(collection(db, "applications"), {
-                    firstName: document.getElementById('appFirstName').value,
-                    lastName: document.getElementById('appLastName').value,
-                    email: document.getElementById('appEmail').value,
-                    phone: document.getElementById('appPhone').value,
-                    experience: document.getElementById('appExperience').value,
-                    message: document.getElementById('appMessage').value,
-                    position: document.getElementById('appPositionHidden').value,
-                    submittedAt: new Date(),
-                    status: 'New'
+                    firstName: document.getElementById('appFirstName').value, lastName: document.getElementById('appLastName').value, email: document.getElementById('appEmail').value, phone: document.getElementById('appPhone').value,
+                    experience: document.getElementById('appExperience').value, message: document.getElementById('appMessage').value, position: document.getElementById('appPositionHidden').value, submittedAt: new Date(), status: 'New'
                 });
-                alert("Application Submitted Successfully!");
-                closeModal('careerModal');
-                careerForm.reset();
+                alert("Application Submitted!"); closeModal('careerModal'); careerForm.reset();
+            } catch (error) { console.error("Error:", error); alert("Error submitting."); } finally { btn.innerText = originalText; btn.disabled = false; }
+        });
+
+        // 3. CUSTOM BUILD FORM (Base64 Logic - No CORS!)
+        const customBuildForm = document.getElementById('customBuildForm');
+        customBuildForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = customBuildForm.querySelector('button'); const originalText = btn.innerText;
+            btn.innerText = "Encrypting & Sending..."; btn.disabled = true;
+
+            const fileInput = document.getElementById('customFile');
+            const file = fileInput.files[0];
+            
+            try {
+                let fileURL = "No file uploaded";
+                
+                if (file) {
+                    // MVP LIMIT CHECK: 1MB = 1048576 bytes
+                    if (file.size > 1048576) {
+                        throw new Error("File is too large! Please upload a file smaller than 1MB.");
+                    }
+                    // Convert to Base64 String
+                    fileURL = await getBase64(file);
+                }
+
+                // Save directly to Firestore
+                await addDoc(collection(db, "custom_inquiries"), {
+                    name: document.getElementById('customName').value,
+                    email: document.getElementById('customEmail').value,
+                    phone: document.getElementById('customPhone').value,
+                    budget: document.getElementById('customBudget').value,
+                    message: document.getElementById('customMessage').value,
+                    blueprintURL: fileURL, // Saves the string directly
+                    submittedAt: new Date()
+                });
+
+                alert("Project Inquiry Sent! We will review your plans.");
+                closeModal('customBuildModal');
+                customBuildForm.reset();
             } catch (error) {
-                console.error("Error submitting application: ", error);
-                alert("Error submitting: " + error.message);
+                console.error("Error:", error);
+                alert("Error sending inquiry: " + error.message);
             } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
         });
 
-
-        // --- 6. UI HELPERS ---
-        window.toggleMenu = function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) nav.classList.add('glass-nav');
-            else nav.classList.remove('glass-nav');
-        });
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
+        // --- UI HELPERS ---
+        window.toggleMenu = function() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        window.addEventListener('scroll', () => { const nav = document.getElementById('navbar'); if (window.scrollY > 50) nav.classList.add('glass-nav'); else nav.classList.remove('glass-nav'); });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
     </script>
 </body>
 </html>

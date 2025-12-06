@@ -32,6 +32,12 @@
             }
         }
     </script>
+    <style>
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+        }
+    </style>
 </head>
 <body class="bg-brand-dark text-gray-100 font-sans antialiased h-screen overflow-hidden">
 
@@ -39,7 +45,6 @@
          LOGIN VIEW (Default)
     ======================== -->
     <div id="loginView" class="h-full w-full flex items-center justify-center relative">
-        <!-- Background Decor -->
         <div class="absolute inset-0 z-0 opacity-20">
             <i class="fa-solid fa-cube text-[30rem] absolute -bottom-20 -right-20 text-brand-sidebar"></i>
         </div>
@@ -73,7 +78,7 @@
     ======================== -->
     <div id="dashboardView" class="h-full w-full hidden relative">
         
-        <!-- 1. MOBILE HEADER (Only visible on small screens) -->
+        <!-- MOBILE HEADER -->
         <div class="lg:hidden bg-brand-sidebar border-b border-slate-700 p-4 flex justify-between items-center sticky top-0 z-40">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
@@ -84,19 +89,17 @@
             </button>
         </div>
 
-        <!-- 2. SIDEBAR OVERLAY (Mobile only backdrop) -->
+        <!-- SIDEBAR OVERLAY -->
         <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/80 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
-        <!-- 3. SIDEBAR (Slide-out on mobile, Fixed on Desktop) -->
+        <!-- SIDEBAR -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-brand-sidebar border-r border-slate-700 flex flex-col justify-between p-6 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
             <div>
-                <!-- Desktop Logo -->
                 <div class="hidden lg:flex mb-10 items-center gap-2">
                     <i class="fa-solid fa-cube text-brand-accent text-xl"></i>
                     <span class="font-logo font-bold text-white tracking-wider">CUSTOM<span class="text-brand-accent">APP</span></span>
                 </div>
                 
-                <!-- Mobile Close Button -->
                 <div class="lg:hidden flex justify-end mb-6">
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white">
                         <i class="fa-solid fa-xmark text-2xl"></i>
@@ -107,8 +110,15 @@
                     <button onclick="switchTab('leads')" id="nav-leads" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 bg-brand-accent text-brand-dark font-bold transition-all">
                         <i class="fa-solid fa-money-bill-wave"></i> Sales Leads
                     </button>
+                    <!-- NEW TAB: Custom Projects -->
+                    <button onclick="switchTab('custom')" id="nav-custom" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-400 hover:text-white hover:bg-slate-700 transition-all">
+                        <i class="fa-solid fa-compass-drafting"></i> Custom Projects
+                    </button>
                     <button onclick="switchTab('jobs')" id="nav-jobs" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-400 hover:text-white hover:bg-slate-700 transition-all">
-                        <i class="fa-solid fa-hard-hat"></i> Job Applications
+                        <i class="fa-solid fa-file-signature"></i> Job Applications
+                    </button>
+                    <button onclick="switchTab('postings')" id="nav-postings" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 text-gray-400 hover:text-white hover:bg-slate-700 transition-all">
+                        <i class="fa-solid fa-bullhorn"></i> Job Postings
                     </button>
                 </nav>
             </div>
@@ -118,10 +128,9 @@
             </button>
         </aside>
 
-        <!-- 4. MAIN CONTENT AREA -->
+        <!-- MAIN CONTENT -->
         <main class="flex-1 bg-brand-dark h-full overflow-y-auto lg:ml-64 p-4 lg:p-8 relative">
             
-            <!-- Header -->
             <header class="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
                 <div>
                     <h2 id="pageTitle" class="text-2xl md:text-3xl font-bold text-white">Sales Leads</h2>
@@ -138,7 +147,7 @@
                 <i class="fa-solid fa-circle-notch fa-spin text-4xl text-brand-accent"></i>
             </div>
 
-            <!-- TAB 1: LEADS CONTENT -->
+            <!-- TAB 1: SALES LEADS CONTENT -->
             <div id="tab-leads">
                 <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden overflow-x-auto">
                     <table class="w-full text-left border-collapse min-w-[600px]">
@@ -146,7 +155,7 @@
                             <tr class="bg-slate-900 border-b border-slate-700 text-xs uppercase text-gray-400 tracking-wider">
                                 <th class="p-4 font-medium">Date</th>
                                 <th class="p-4 font-medium">Customer Name</th>
-                                <th class="p-4 font-medium">Project Size</th>
+                                <th class="p-4 font-medium">Details</th>
                                 <th class="p-4 font-medium">Est. Cost</th>
                                 <th class="p-4 font-medium">Contact</th>
                                 <th class="p-4 font-medium text-right">Action</th>
@@ -160,7 +169,29 @@
                 </div>
             </div>
 
-            <!-- TAB 2: APPLICATIONS CONTENT (Hidden) -->
+            <!-- TAB 2: CUSTOM PROJECTS CONTENT (NEW) -->
+            <div id="tab-custom" class="hidden">
+                <div class="bg-brand-sidebar rounded-2xl border border-slate-700 overflow-hidden overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-slate-900 border-b border-slate-700 text-xs uppercase text-gray-400 tracking-wider">
+                                <th class="p-4 font-medium">Date</th>
+                                <th class="p-4 font-medium">Customer Name</th>
+                                <th class="p-4 font-medium">Est. Budget</th>
+                                <th class="p-4 font-medium">Blueprint</th>
+                                <th class="p-4 font-medium">Message</th>
+                                <th class="p-4 font-medium text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customTableBody" class="text-sm divide-y divide-slate-700">
+                            <!-- JS Injected Rows -->
+                        </tbody>
+                    </table>
+                    <div id="noCustomMsg" class="p-8 text-center text-gray-500 hidden">No custom project inquiries found.</div>
+                </div>
+            </div>
+
+            <!-- TAB 3: APPLICATIONS CONTENT -->
             <div id="tab-jobs" class="hidden">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="applicationsGrid">
                     <!-- JS Injected Cards -->
@@ -168,17 +199,79 @@
                 <div id="noAppsMsg" class="p-8 text-center text-gray-500 hidden">No job applications found.</div>
             </div>
 
+            <!-- TAB 4: MANAGE POSTINGS -->
+            <div id="tab-postings" class="hidden">
+                <div class="flex justify-end mb-6">
+                    <button onclick="openCreateJobModal()" class="bg-brand-accent text-brand-dark font-bold px-6 py-3 rounded-xl hover:bg-white transition-all shadow-lg shadow-amber-500/20">
+                        <i class="fa-solid fa-plus mr-2"></i> Create New Position
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="postingsGrid">
+                    <!-- JS Injected Postings -->
+                </div>
+                <div id="noPostingsMsg" class="p-8 text-center text-gray-500 hidden">
+                    <i class="fa-solid fa-clipboard-list text-4xl mb-4 text-gray-600"></i>
+                    <p>No active job listings. Create one to get started.</p>
+                </div>
+            </div>
+
         </main>
     </div>
 
+    <!-- NEW JOB MODAL -->
+    <div id="createJobModal" class="fixed inset-0 z-[60] hidden modal-backdrop flex items-center justify-center px-4">
+        <div class="bg-brand-sidebar border border-slate-600 rounded-2xl shadow-2xl w-full max-w-lg p-8 relative">
+            <button onclick="closeCreateJobModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <h3 class="text-2xl font-bold text-white mb-6">Create Job Listing</h3>
+            
+            <form id="createJobForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Job Title</label>
+                    <input type="text" id="jobTitle" required class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-2 text-white focus:border-brand-accent focus:outline-none" placeholder="e.g. Site Foreman">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Type</label>
+                        <select id="jobType" class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-2 text-white focus:border-brand-accent focus:outline-none">
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Contract">Contract</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Pay Range</label>
+                        <input type="text" id="jobPay" required class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-2 text-white focus:border-brand-accent focus:outline-none" placeholder="e.g. $25 - $30 / hr">
+                    </div>
+                </div>
 
-    <!-- Logic Script (Type Module for Imports) -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Description</label>
+                    <textarea id="jobDesc" rows="3" required class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-2 text-white focus:border-brand-accent focus:outline-none" placeholder="Brief overview of the role..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Requirements (Separate by comma)</label>
+                    <textarea id="jobReqs" rows="2" required class="w-full bg-brand-dark border border-slate-600 rounded-lg px-4 py-2 text-white focus:border-brand-accent focus:outline-none" placeholder="Valid License, 2+ Years Exp, Own Tools"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all mt-2">
+                    Post Job
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Logic Script -->
     <script type="module">
-        // 1. FIREBASE CONFIG & IMPORTS
-        // ADDED: deleteDoc, doc imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-        import { getFirestore, collection, getDocs, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, orderBy, query, deleteDoc, addDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
         // Config
         const firebaseConfig = {
@@ -196,15 +289,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- AUTHENTICATION LOGIC ---
-
+        // --- AUTH ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("Admin Logged In:", user.email);
                 document.getElementById('loginView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 document.getElementById('dashboardView').classList.add('block');
-                loadLeads();
+                loadLeads(); // Default load
             } else {
                 document.getElementById('dashboardView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('block');
@@ -214,64 +305,23 @@
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('loginError');
             const btn = e.target.querySelector('button');
-
             btn.innerText = "Verifying...";
-            btn.disabled = true;
-            errorMsg.classList.add('hidden');
-
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
             } catch (error) {
-                console.error("Login Failed", error);
-                errorMsg.classList.remove('hidden');
-                errorMsg.innerText = "Login failed: " + error.message;
+                document.getElementById('loginError').classList.remove('hidden');
             } finally {
                 btn.innerText = "Secure Login";
-                btn.disabled = false;
             }
         });
 
-        window.logout = function() {
-            signOut(auth).then(() => {
-                alert("Logged out successfully.");
-            }).catch((error) => {
-                console.error("Error signing out", error);
-            });
-        }
+        window.logout = function() { signOut(auth); }
 
-
-        // --- DELETE LOGIC (NEW) ---
-        window.deleteEntry = async function(collectionName, docId) {
-            const confirmDelete = confirm("Are you sure you want to permanently delete this record? This cannot be undone.");
-            if (!confirmDelete) return;
-
-            try {
-                await deleteDoc(doc(db, collectionName, docId));
-                alert("Record deleted successfully.");
-                
-                // Refresh the appropriate view
-                if (collectionName === 'leads') {
-                    loadLeads();
-                } else {
-                    loadApplications();
-                }
-            } catch (error) {
-                console.error("Error deleting document: ", error);
-                alert("Error deleting record: " + error.message);
-            }
-        }
-
-
-        // --- DASHBOARD UI LOGIC ---
-        
+        // --- UI LOGIC ---
         window.toggleSidebar = function() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            
             if (sidebar.classList.contains('-translate-x-full')) {
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
@@ -282,165 +332,250 @@
         }
 
         window.switchTab = function(tabName) {
-            const navLeads = document.getElementById('nav-leads');
-            const navJobs = document.getElementById('nav-jobs');
+            const tabs = ['leads', 'custom', 'jobs', 'postings'];
             const title = document.getElementById('pageTitle');
-
-            if (tabName === 'leads') {
-                navLeads.classList.replace('text-gray-400', 'bg-brand-accent');
-                navLeads.classList.replace('hover:text-white', 'text-brand-dark');
-                navLeads.classList.add('font-bold');
+            
+            tabs.forEach(t => {
+                const nav = document.getElementById(`nav-${t}`);
+                const section = document.getElementById(`tab-${t}`);
                 
-                navJobs.classList.replace('bg-brand-accent', 'text-gray-400');
-                navJobs.classList.replace('text-brand-dark', 'hover:text-white');
-                navJobs.classList.remove('font-bold');
-                
-                document.getElementById('tab-leads').classList.remove('hidden');
-                document.getElementById('tab-jobs').classList.add('hidden');
-                title.innerText = "Sales Leads";
-                loadLeads();
-            } else {
-                navJobs.classList.replace('text-gray-400', 'bg-brand-accent');
-                navJobs.classList.replace('hover:text-white', 'text-brand-dark');
-                navJobs.classList.add('font-bold');
-                
-                navLeads.classList.replace('bg-brand-accent', 'text-gray-400');
-                navLeads.classList.replace('text-brand-dark', 'hover:text-white');
-                navLeads.classList.remove('font-bold');
+                if (t === tabName) {
+                    nav.classList.replace('text-gray-400', 'bg-brand-accent');
+                    nav.classList.replace('hover:text-white', 'text-brand-dark');
+                    nav.classList.add('font-bold');
+                    nav.classList.remove('hover:bg-slate-700');
+                    section.classList.remove('hidden');
+                } else {
+                    nav.classList.replace('bg-brand-accent', 'text-gray-400');
+                    nav.classList.replace('text-brand-dark', 'hover:text-white');
+                    nav.classList.remove('font-bold');
+                    nav.classList.add('hover:bg-slate-700');
+                    section.classList.add('hidden');
+                }
+            });
 
-                document.getElementById('tab-jobs').classList.remove('hidden');
-                document.getElementById('tab-leads').classList.add('hidden');
-                title.innerText = "Job Applications";
-                loadApplications();
-            }
+            if (tabName === 'leads') { title.innerText = "Sales Leads"; loadLeads(); }
+            else if (tabName === 'custom') { title.innerText = "Custom Project Inquiries"; loadCustomInquiries(); }
+            else if (tabName === 'jobs') { title.innerText = "Job Applications"; loadApplications(); }
+            else if (tabName === 'postings') { title.innerText = "Manage Postings"; loadPostings(); }
 
-            if (window.innerWidth < 1024) {
-                toggleSidebar();
-            }
+            if (window.innerWidth < 1024) toggleSidebar();
         }
 
-        // --- DATA FETCHING ---
+        // --- NEW JOB MODAL ---
+        window.openCreateJobModal = () => document.getElementById('createJobModal').classList.remove('hidden');
+        window.closeCreateJobModal = () => document.getElementById('createJobModal').classList.add('hidden');
 
-        // 1. Fetch Sales Leads
-        async function loadLeads() {
-            const tableBody = document.getElementById('leadsTableBody');
-            const loader = document.getElementById('loader');
-            const noMsg = document.getElementById('noLeadsMsg');
+        document.getElementById('createJobForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Posting...";
+            btn.disabled = true;
 
-            tableBody.innerHTML = '';
-            loader.classList.remove('hidden');
-            noMsg.classList.add('hidden');
+            const reqsString = document.getElementById('jobReqs').value;
+            const reqsArray = reqsString.split(',').map(item => item.trim()).filter(item => item);
 
             try {
-                const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
-                const querySnapshot = await getDocs(q);
-
-                loader.classList.add('hidden');
-
-                if (querySnapshot.empty) {
-                    noMsg.classList.remove('hidden');
-                    return;
-                }
-
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const docId = doc.id; // Capture ID for deletion
-                    const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
-                    
-                    const row = `
-                        <tr class="hover:bg-slate-800 transition-colors border-b border-slate-800">
-                            <td class="p-4 text-gray-400 whitespace-nowrap">${date}</td>
-                            <td class="p-4 font-bold text-white whitespace-nowrap">${data.name || 'Unknown'}</td>
-                            <td class="p-4 text-gray-300 whitespace-nowrap">${data.wallLength || '0'} ft / ${data.wallHeight || '0'} ft</td>
-                            <td class="p-4 text-brand-accent font-mono whitespace-nowrap">$${data.estimatedCost || '0'}</td>
-                            <td class="p-4 min-w-[200px]">
-                                <div class="text-sm text-white">${data.email}</div>
-                                <div class="text-xs text-gray-500">${data.phone}</div>
-                            </td>
-                            <td class="p-4 text-right flex items-center justify-end gap-2">
-                                <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white hover:text-black px-3 py-2 rounded transition-colors font-bold">Email</a>
-                                <button onclick="deleteEntry('leads', '${docId}')" class="text-xs bg-red-900/30 text-red-400 hover:bg-red-600 hover:text-white px-3 py-2 rounded transition-colors" title="Delete Entry">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
+                await addDoc(collection(db, "job_listings"), {
+                    title: document.getElementById('jobTitle').value,
+                    type: document.getElementById('jobType').value,
+                    pay: document.getElementById('jobPay').value,
+                    desc: document.getElementById('jobDesc').value,
+                    reqs: reqsArray,
+                    postedAt: new Date()
                 });
-
+                alert("Job Posted Successfully!");
+                closeCreateJobModal();
+                e.target.reset();
+                loadPostings(); // Refresh list
             } catch (error) {
-                console.error("Error loading leads:", error);
-                loader.classList.add('hidden');
+                alert("Error posting job: " + error.message);
+            } finally {
+                btn.innerText = "Post Job";
+                btn.disabled = false;
             }
+        });
+
+        // --- DATA LOADERS ---
+        async function loadLeads() {
+             const tableBody = document.getElementById('leadsTableBody');
+            tableBody.innerHTML = '';
+            document.getElementById('loader').classList.remove('hidden');
+            
+            const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
+            const querySnapshot = await getDocs(q);
+            document.getElementById('loader').classList.add('hidden');
+
+            if (querySnapshot.empty) {
+                document.getElementById('noLeadsMsg').classList.remove('hidden');
+                return;
+            } else {
+                 document.getElementById('noLeadsMsg').classList.add('hidden');
+            }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                const row = `
+                    <tr class="hover:bg-slate-800 transition-colors border-b border-slate-800">
+                        <td class="p-4 text-gray-400 whitespace-nowrap">${date}</td>
+                        <td class="p-4 font-bold text-white whitespace-nowrap">${data.name || 'Unknown'}</td>
+                        <td class="p-4 text-gray-300 whitespace-nowrap">${data.wallLength || '0'} ft / ${data.wallHeight || '0'} ft</td>
+                        <td class="p-4 text-brand-accent font-mono whitespace-nowrap">$${data.estimatedCost || '0'}</td>
+                        <td class="p-4">
+                            <div class="text-sm text-white">${data.email}</div>
+                            <div class="text-xs text-gray-500">${data.phone}</div>
+                        </td>
+                        <td class="p-4 text-right flex items-center justify-end gap-2">
+                            <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white px-3 py-2 rounded font-bold text-white hover:text-black">Email</a>
+                            <button onclick="deleteEntry('leads', '${doc.id}')" class="text-xs bg-red-900/30 text-red-400 px-3 py-2 rounded hover:bg-red-600 hover:text-white"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
         }
 
-        // 2. Fetch Job Applications
+        // --- NEW: LOAD CUSTOM INQUIRIES ---
+        async function loadCustomInquiries() {
+            const tableBody = document.getElementById('customTableBody');
+            tableBody.innerHTML = '';
+            document.getElementById('loader').classList.remove('hidden');
+            
+            const q = query(collection(db, "custom_inquiries"), orderBy("submittedAt", "desc"));
+            const querySnapshot = await getDocs(q);
+            document.getElementById('loader').classList.add('hidden');
+
+            if (querySnapshot.empty) {
+                document.getElementById('noCustomMsg').classList.remove('hidden');
+                return;
+            } else {
+                 document.getElementById('noCustomMsg').classList.add('hidden');
+            }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                
+                // Logic for Blueprint Link
+                let blueprintAction = `<span class="text-xs text-gray-500 italic">No File</span>`;
+                if (data.blueprintURL && data.blueprintURL !== "No file uploaded") {
+                    blueprintAction = `<a href="${data.blueprintURL}" target="_blank" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded font-bold"><i class="fa-solid fa-file-pdf mr-1"></i> View Plan</a>`;
+                }
+
+                const row = `
+                    <tr class="hover:bg-slate-800 transition-colors border-b border-slate-800">
+                        <td class="p-4 text-gray-400 whitespace-nowrap">${date}</td>
+                        <td class="p-4 font-bold text-white whitespace-nowrap">
+                            ${data.name}
+                            <div class="text-xs font-normal text-gray-500">${data.email}</div>
+                        </td>
+                        <td class="p-4 text-brand-accent font-mono whitespace-nowrap">${data.budget || 'N/A'}</td>
+                        <td class="p-4">${blueprintAction}</td>
+                        <td class="p-4 max-w-xs text-xs text-gray-400 truncate" title="${data.message}">${data.message}</td>
+                        <td class="p-4 text-right flex items-center justify-end gap-2">
+                            <a href="mailto:${data.email}" class="text-xs bg-slate-700 hover:bg-white px-3 py-2 rounded font-bold text-white hover:text-black">Contact</a>
+                            <button onclick="deleteEntry('custom_inquiries', '${doc.id}')" class="text-xs bg-red-900/30 text-red-400 px-3 py-2 rounded hover:bg-red-600 hover:text-white"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
         async function loadApplications() {
             const grid = document.getElementById('applicationsGrid');
-            const loader = document.getElementById('loader');
-            const noMsg = document.getElementById('noAppsMsg');
-
             grid.innerHTML = '';
-            loader.classList.remove('hidden');
-            noMsg.classList.add('hidden');
+            document.getElementById('loader').classList.remove('hidden');
 
-            try {
-                const q = query(collection(db, "applications"), orderBy("submittedAt", "desc"));
-                const querySnapshot = await getDocs(q);
+            const q = query(collection(db, "applications"), orderBy("submittedAt", "desc"));
+            const querySnapshot = await getDocs(q);
+            document.getElementById('loader').classList.add('hidden');
 
-                loader.classList.add('hidden');
-
-                if (querySnapshot.empty) {
-                    noMsg.classList.remove('hidden');
-                    return;
-                }
-
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const docId = doc.id; // Capture ID for deletion
-                    const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
-
-                    const card = `
-                        <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl hover:border-gray-500 transition-colors flex flex-col justify-between h-full">
-                            <div>
-                                <div class="flex justify-between items-start mb-4">
-                                    <div>
-                                        <h3 class="font-bold text-lg text-white">${data.firstName} ${data.lastName}</h3>
-                                        <span class="text-xs text-brand-accent uppercase tracking-wider">${data.position}</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">${date}</span>
-                                </div>
-
-                                <div class="mb-4 space-y-1">
-                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-briefcase w-5 text-gray-500"></i> ${data.experience} Exp</div>
-                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-envelope w-5 text-gray-500"></i> ${data.email}</div>
-                                    <div class="text-sm text-gray-300"><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
-                                </div>
-
-                                <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4 max-h-32 overflow-y-auto">
-                                    "${data.message || 'No cover letter provided.'}"
-                                </div>
-                            </div>
-
-                            <div class="flex gap-2 mt-2">
-                                <a href="mailto:${data.email}?subject=Interview Request: ${data.position}" class="flex-1 text-center bg-slate-700 hover:bg-brand-accent hover:text-brand-dark text-white text-sm font-bold py-2 rounded transition-all">
-                                    Contact
-                                </a>
-                                <button onclick="deleteEntry('applications', '${docId}')" class="px-3 bg-red-900/30 text-red-400 hover:bg-red-600 hover:text-white rounded transition-colors" title="Delete Application">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    grid.innerHTML += card;
-                });
-
-            } catch (error) {
-                console.error("Error loading apps:", error);
-                loader.classList.add('hidden');
+             if (querySnapshot.empty) {
+                document.getElementById('noAppsMsg').classList.remove('hidden');
+                return;
+            } else {
+                 document.getElementById('noAppsMsg').classList.add('hidden');
             }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const date = data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                const card = `
+                    <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex justify-between mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg text-white">${data.firstName} ${data.lastName}</h3>
+                                    <span class="text-xs text-brand-accent uppercase">${data.position}</span>
+                                </div>
+                                <span class="text-xs text-gray-500">${date}</span>
+                            </div>
+                            <div class="mb-4 space-y-1 text-sm text-gray-300">
+                                <div><i class="fa-solid fa-briefcase w-5 text-gray-500"></i> ${data.experience} Exp</div>
+                                <div><i class="fa-solid fa-envelope w-5 text-gray-500"></i> ${data.email}</div>
+                                <div><i class="fa-solid fa-phone w-5 text-gray-500"></i> ${data.phone}</div>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded text-xs text-gray-400 italic mb-4 max-h-32 overflow-y-auto">"${data.message}"</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="mailto:${data.email}" class="flex-1 text-center bg-slate-700 hover:bg-brand-accent hover:text-brand-dark py-2 rounded text-sm font-bold text-white">Contact</a>
+                            <button onclick="deleteEntry('applications', '${doc.id}')" class="px-3 bg-red-900/30 text-red-400 rounded hover:bg-red-600 hover:text-white"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>`;
+                grid.innerHTML += card;
+            });
         }
 
+        async function loadPostings() {
+            const grid = document.getElementById('postingsGrid');
+            const noMsg = document.getElementById('noPostingsMsg');
+            grid.innerHTML = '';
+            document.getElementById('loader').classList.remove('hidden');
+
+            const q = query(collection(db, "job_listings"), orderBy("postedAt", "desc"));
+            const querySnapshot = await getDocs(q);
+            document.getElementById('loader').classList.add('hidden');
+
+            if (querySnapshot.empty) {
+                noMsg.classList.remove('hidden');
+            } else {
+                noMsg.classList.add('hidden');
+            }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const card = `
+                    <div class="bg-brand-sidebar border border-slate-700 p-6 rounded-xl relative group">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl text-white">${data.title}</h3>
+                            <button onclick="deleteEntry('job_listings', '${doc.id}')" class="text-red-400 hover:text-red-200 transition-colors"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <div class="flex gap-2 mb-4">
+                            <span class="text-xs bg-slate-700 text-white px-2 py-1 rounded">${data.type}</span>
+                            <span class="text-xs bg-slate-700 text-brand-accent px-2 py-1 rounded">${data.pay}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">${data.desc}</p>
+                        <div class="text-xs text-gray-500">
+                            <strong>Reqs:</strong> ${data.reqs ? data.reqs.join(', ') : 'None'}
+                        </div>
+                    </div>`;
+                grid.innerHTML += card;
+            });
+        }
+
+        // --- DELETE LOGIC ---
+        window.deleteEntry = async function(collectionName, docId) {
+            if (!confirm("Are you sure you want to delete this?")) return;
+            try {
+                await deleteDoc(doc(db, collectionName, docId));
+                if (collectionName === 'leads') loadLeads();
+                else if (collectionName === 'custom_inquiries') loadCustomInquiries();
+                else if (collectionName === 'applications') loadApplications();
+                else if (collectionName === 'job_listings') loadPostings();
+            } catch (error) {
+                alert("Error deleting: " + error.message);
+            }
+        }
     </script>
 </body>
 </html>

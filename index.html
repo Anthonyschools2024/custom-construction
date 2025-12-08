@@ -63,7 +63,6 @@
                     <div class="flex items-center space-x-1 bg-slate-900/50 backdrop-blur-sm p-1.5 rounded-xl border border-white/5">
                         <a href="#home" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Home</a>
                         <a href="#about" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">About ICF</a>
-                        <a href="#custom-homes" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Custom Builds</a>
                         <a href="#gallery" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Gallery</a>
                         <a href="#consultation" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-gray-300 border border-transparent hover:text-brand-accent hover:bg-brand-accent/5 transition-all">Estimator</a>
                         <a href="#careers" class="px-4 py-2.5 rounded-lg text-sm font-bold tracking-wide text-brand-accent border border-brand-accent/20 bg-brand-accent/5 hover:bg-brand-accent/10 transition-all">Careers</a>
@@ -82,7 +81,6 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About ICF</a>
-                <a href="#custom-homes" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Custom Builds</a>
                 <a href="#gallery" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
                 <a href="#consultation" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Estimator</a>
                 <a href="#careers" class="text-brand-accent hover:text-white block px-3 py-2 rounded-md text-base font-medium">Careers</a>
@@ -142,47 +140,16 @@
         </div>
     </div>
 
-    <!-- 3. NEW: CUSTOM HOME INQUIRY MODAL (With File Upload) -->
-    <div id="customBuildModal" class="fixed inset-0 z-[100] hidden modal-backdrop flex items-center justify-center px-4">
-        <div class="bg-slate-900 border border-white/20 rounded-2xl shadow-2xl w-full max-w-lg p-8 relative modal-content opacity-0 transform scale-95 transition-all">
-            <button onclick="closeModal('customBuildModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <div class="mb-6 border-b border-gray-700 pb-4">
-                <span class="text-white text-xs font-bold tracking-widest uppercase">Traditional & Custom</span>
-                <h3 class="text-2xl font-bold text-brand-accent mt-1">Start Your Custom Build</h3>
-                <p class="text-gray-400 text-sm mt-1">Tell us about your vision. We build to your exact specs.</p>
-            </div>
-            <form id="customBuildForm" class="space-y-4">
-                <input type="text" id="customName" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Full Name">
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="email" id="customEmail" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Email">
-                    <input type="tel" id="customPhone" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Phone">
-                </div>
-                <input type="text" id="customBudget" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Estimated Budget (Optional)">
-                
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Upload Blueprints / Plans (PDF, Images) <br><span class="text-brand-accent text-[10px]">Max Size: 1MB</span></label>
-                    <input type="file" id="customFile" accept=".pdf,image/*" class="w-full bg-slate-950 border border-slate-700 rounded-lg text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-accent file:text-brand-dark hover:file:bg-white transition-all">
-                    <p class="text-xs text-gray-600 mt-1">If you have plans ready, upload them here.</p>
-                </div>
-                
-                <textarea id="customMessage" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent" placeholder="Tell us about your project requirements..."></textarea>
-                
-                <button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-xl hover:bg-white transition-all mt-2">
-                    Submit Project Inquiry
-                </button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- SECTIONS -->
     <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-30"><div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/80 to-transparent"></div></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 text-center pt-20">
             <h1 class="text-4xl md:text-7xl font-bold tracking-tight mb-6 reveal">BUILDING THE <br><span class="text-gradient font-logo">FUTURE</span> OF TULSA</h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 reveal delay-100">Specializing in Insulated Concrete Forms (ICF). <br>Stronger. More Efficient. Built to Last.</p>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 reveal delay-100">Top Distributor of Insulated Concrete Forms (ICF). <br>Stronger. More Efficient. Built to Last.</p>
             <div class="mt-10 flex justify-center gap-4 reveal delay-200">
                 <a href="#consultation" class="group relative px-8 py-4 bg-brand-accent text-brand-dark font-bold rounded-none skew-x-[-10deg] hover:bg-white transition-all"><span class="block skew-x-[10deg]">GET AN ESTIMATE</span></a>
-                <a href="#custom-homes" class="group px-8 py-4 border border-gray-500 text-white font-bold rounded-none skew-x-[-10deg] hover:border-brand-accent hover:text-brand-accent transition-all"><span class="block skew-x-[10deg]">CUSTOM HOMES</span></a>
             </div>
         </div>
     </section>
@@ -198,31 +165,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: CUSTOM TRADITIONAL HOMES -->
-    <section id="custom-homes" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1600596542815-3ad19c6f6638?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-20">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/90 to-brand-dark/40"></div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16">
-            <div class="flex-1 reveal">
-                <h2 class="text-white/70 font-bold tracking-widest uppercase text-sm mb-2">Beyond Concrete</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">Custom Traditional <br><span class="text-brand-accent">Framing & Design</span></h3>
-                <p class="text-gray-300 text-lg mb-6 leading-relaxed">While we specialize in ICF, our roots are deeply planted in master craftsmanship. We understand that some architectural visions require the flexibility of traditional timber framing or hybrid approaches.</p>
-                <div class="space-y-4 mb-8">
-                    <div class="flex items-start"><i class="fa-solid fa-compass-drafting text-brand-accent mt-1 mr-4"></i><div><h4 class="font-bold text-white">Built to Your Specs</h4><p class="text-sm text-gray-400">Bring your own plans or work with our architects. We build exactly what you envision.</p></div></div>
-                    <div class="flex items-start"><i class="fa-solid fa-hammer text-brand-accent mt-1 mr-4"></i><div><h4 class="font-bold text-white">Hybrid Capabilities</h4><p class="text-sm text-gray-400">Combine the strength of an ICF foundation with the aesthetic of traditional wood framing.</p></div></div>
-                </div>
-                <button onclick="openModal('customBuildModal')" class="bg-white text-brand-dark px-8 py-3 rounded-full font-bold hover:bg-brand-accent hover:text-white transition-all shadow-xl">Submit Your Blueprints</button>
-            </div>
-            <div class="flex-1 w-full reveal delay-100">
-                <div class="grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1574359653015-7429440f135b?q=80&w=1000&auto=format&fit=crop" class="rounded-2xl border border-white/10 shadow-2xl transform translate-y-8">
-                    <img src="https://images.unsplash.com/photo-1593604340846-4f7188963691?q=80&w=1000&auto=format&fit=crop" class="rounded-2xl border border-white/10 shadow-2xl">
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <section id="gallery" class="py-24 bg-brand-dark">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16 reveal"><h2 class="text-3xl md:text-5xl font-bold text-white">Recent Projects</h2></div>
@@ -240,7 +183,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="reveal"><h2 class="text-4xl md:text-5xl font-bold mb-6">Estimate Your Project</h2><p class="text-gray-400 mb-8 text-lg">Preliminary estimation tool.</p><ul class="space-y-4 mb-8 text-gray-300"><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Premium ICF Blocks</li><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Steel Reinforcement</li><li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-3"></i> Concrete Pouring</li></ul></div>
                 <div class="bg-slate-900 border border-slate-700 p-8 rounded-3xl shadow-2xl reveal delay-100">
-                    <div class="mb-8"><label class="block text-sm font-medium text-gray-400 mb-2">Total Wall Length (Linear Feet)</label><div class="flex items-center justify-between mb-2"><span class="text-2xl font-bold text-white"><span id="lengthValue">100</span> ft</span></div><input type="range" min="10" max="500" value="100" class="w-full" id="lengthInput"></div>
+                    <div class="mb-8"><label class="block text-sm font-medium text-gray-400 mb-2">Total Wall Length (Linear Feet)</label><div class="flex items-center justify-between mb-2"><span class="text-2xl font-bold text-white"><span id="lengthValue">100</span> ft</span></div><input type="range" min="0" max="500" value="0" class="w-full" id="lengthInput"></div>
                     <div class="mb-8"><label class="block text-sm font-medium text-gray-400 mb-2">Wall Height (Feet)</label><div class="flex gap-4 mt-2"><button class="height-btn px-4 py-2 bg-brand-accent text-brand-dark font-bold rounded" data-height="8">8 ft</button><button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded" data-height="10">10 ft</button><button class="height-btn px-4 py-2 bg-slate-800 text-white font-bold rounded" data-height="12">12 ft</button></div></div>
                     <div class="border-t border-slate-700 pt-6"><div class="flex justify-between items-center mb-2"><span class="text-gray-400">Estimated Blocks:</span><span class="text-xl font-bold text-white" id="blocksResult">0</span></div><div class="flex justify-between items-center"><span class="text-gray-400">Approx. Material Cost:</span><span class="text-3xl font-bold text-brand-accent" id="costResult">$0</span></div><button onclick="openModal('leadModal')" class="w-full mt-6 bg-white text-brand-dark font-bold py-3 rounded-xl hover:bg-gray-200 transition-all flex justify-center items-center gap-2"><span>Book Consultation</span><i class="fa-solid fa-arrow-right"></i></button></div>
                 </div>
@@ -303,16 +246,6 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        // --- HELPER: BASE64 ENCODER ---
-        const getBase64 = (file) => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        };
 
         // --- FETCH JOBS ---
         async function renderJobs() {
@@ -407,7 +340,6 @@
             if (event.target.classList.contains('modal-backdrop')) {
                 if (!document.getElementById('leadModal').classList.contains('hidden')) closeModal('leadModal');
                 if (!document.getElementById('careerModal').classList.contains('hidden')) closeModal('careerModal');
-                if (!document.getElementById('customBuildModal').classList.contains('hidden')) closeModal('customBuildModal');
             }
         }
 
@@ -441,51 +373,6 @@
                 });
                 alert("Application Submitted!"); closeModal('careerModal'); careerForm.reset();
             } catch (error) { console.error("Error:", error); alert("Error submitting."); } finally { btn.innerText = originalText; btn.disabled = false; }
-        });
-
-        // 3. CUSTOM BUILD FORM (Base64 Logic - No CORS!)
-        const customBuildForm = document.getElementById('customBuildForm');
-        customBuildForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = customBuildForm.querySelector('button'); const originalText = btn.innerText;
-            btn.innerText = "Encrypting & Sending..."; btn.disabled = true;
-
-            const fileInput = document.getElementById('customFile');
-            const file = fileInput.files[0];
-            
-            try {
-                let fileURL = "No file uploaded";
-                
-                if (file) {
-                    // MVP LIMIT CHECK: 1MB = 1048576 bytes
-                    if (file.size > 1048576) {
-                        throw new Error("File is too large! Please upload a file smaller than 1MB.");
-                    }
-                    // Convert to Base64 String
-                    fileURL = await getBase64(file);
-                }
-
-                // Save directly to Firestore
-                await addDoc(collection(db, "custom_inquiries"), {
-                    name: document.getElementById('customName').value,
-                    email: document.getElementById('customEmail').value,
-                    phone: document.getElementById('customPhone').value,
-                    budget: document.getElementById('customBudget').value,
-                    message: document.getElementById('customMessage').value,
-                    blueprintURL: fileURL, // Saves the string directly
-                    submittedAt: new Date()
-                });
-
-                alert("Project Inquiry Sent! We will review your plans.");
-                closeModal('customBuildModal');
-                customBuildForm.reset();
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Error sending inquiry: " + error.message);
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
         });
 
         // --- UI HELPERS ---
